@@ -10,7 +10,7 @@ const Article = function(article) {
 };
 
 Article.getAll = result => {
-  sql.query("SELECT  id, image, title, readTime, date FROM articles ", (err, res) => {
+  sql.query("SELECT * FROM articles ", (err, res) => {
    // SELECT JSON_ARRAY('Hot', 'Warm', 'Cold') AS 'Result';
     if (err) {
       console.log("error: ", err);
@@ -19,6 +19,19 @@ Article.getAll = result => {
     }
 
     console.log("articles : ", res);
+    result(null, res);
+  });
+};
+
+Article.getWriter = (writerID,result) => {
+  sqla = "SELECT  * FROM writer WHERE writerID ='"+writerID+"' LIMIT 1";
+  sql.query(sqla, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    console.log("The writer ID info is :"+ writerID);
     result(null, res);
   });
 };

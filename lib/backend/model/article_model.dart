@@ -16,7 +16,6 @@ class NewsModel {
   List<Article> articles;
 
   factory NewsModel.fromJson(Map<String, dynamic> json) => NewsModel(
-    
         articles: List<Article>.from(
             json["Articles"].map((x) => Article.fromJson(x))),
       );
@@ -32,15 +31,19 @@ class Article {
   final int id;
   final String image;
   final String title;
+  final String? Description;
   final int readTime;
   final String date;
+  final int? writerID;
 
   Article({
     required this.id,
     required this.image,
     required this.title,
+    this.Description,
     required this.readTime,
     required this.date,
+    this.writerID,
   });
 
   factory Article.fromJson(Map<String, dynamic> json) {
@@ -48,16 +51,20 @@ class Article {
       id: json['id'],
       image: json['image'],
       title: json['title'],
+      Description: json['Description'],
       readTime: json['readTime'],
       date: json['date'],
+      writerID: json['writerID'],
     );
   }
   Map<String, dynamic> toJson() => {
         "id": id,
         "image": image,
         "title": title,
+        "Description": Description,
         "readTime": readTime,
         "date": date,
+        "writerID": writerID,
       };
 }
 

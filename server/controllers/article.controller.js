@@ -7,7 +7,7 @@ exports.findAll = (req, res) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving customers."
+            err.message || "Some error occurred while retrieving articles."
         });
       else {
           res.send(data);}
@@ -15,14 +15,20 @@ exports.findAll = (req, res) => {
   };
 
   // Retrieve all Customers from the database.
-exports.findArticle = (req, res) => {
-  article.getAll((err, data) => {
+exports.findWriter = (req, res) => {
+  article.getWriter(req.query.writerID,(err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving customers."
-      });
+          err.message || "Some error occurred while retrieving writer."
+      });   
     else {
-        res.send(data);}
+      let array = data;
+
+      let object = array.reduce((prev, curr) => ({ ...prev, ...curr }), {});
+      
+      console.log(object);
+
+        res.send(object);}
   });
 };

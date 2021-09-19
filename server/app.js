@@ -13,6 +13,8 @@ app.use(express.urlencoded({ extended: true }))
 
 //Create User
 app.get('/getUser', articles.findAll)
+//Create User
+app.get('/getWriter', articles.findWriter)
 
 app.listen(3000);
 

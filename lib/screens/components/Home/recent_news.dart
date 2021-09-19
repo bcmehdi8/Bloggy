@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:travelv2/config/constants.dart';
-import 'package:travelv2/repos/article_bloc.dart';
-import 'package:travelv2/repos/article_model.dart';
+import 'package:travelv2/backend/bloc/article_bloc.dart';
+import 'package:travelv2/backend/model/article_model.dart';
 import 'package:travelv2/screens/home.dart';
 
 class recentNews extends StatefulWidget {
@@ -21,66 +21,76 @@ class _recentNewsState extends State<recentNews> {
     newsBloc.eventSink.add(ArticleAction.Fetch);
     super.initState();
   }
+  @override
+  void dispose() {
+    
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Container(
-      child: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder<List<Article>>(
-                stream: newsBloc.articleStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError)
-                    // ignore: curly_braces_in_flow_control_structures
-                    return Center(
-                      child: Text("Error"),
-                    );
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var article = snapshot.data![index];
-                          return Align(
-                            heightFactor: 1.2,
-                            child: InkWell(
-                              child: recentNewsCard(
-                                  image: article.image,
-                                  title: article.title,
-                                  date: article.date,
-                                  readTime: article.readTime,
-                                  press: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Home(),
-                                      ),
-                                    );
-                                  }),
-                              onTap: () => {
-                                Navigator.of(context).pushNamed('/article_page',
-                                    arguments: "hello world")
-                              },
-                            ),
-                          );
-                        });
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("${snapshot.error}"),
-                    );
-                  }
-                  return const Center(
-                      child: Text(
-                    "No data",
-                    style: TextStyle(fontSize: 30),
-                  ));
-                }),
-          ),
-        ],
+    return IntrinsicHeight(
+      child: Container(
+        height: 300,
+        child: StreamBuilder<List<Article>>(
+            stream: newsBloc.articleStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError)
+                // ignore: curly_braces_in_flow_control_structures
+                return Center(
+                  child: Text("Error"),
+                );
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var article = snapshot.data![index];
+                      return Align(
+                        heightFactor: 1.2,
+                        child: InkWell(
+                          child: recentNewsCard(
+                              image: article.image,
+                              title: article.title,
+                              date: article.date,
+                              readTime: article.readTime,
+                              press: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Home(),
+                                  ),
+                                );
+                              }),
+                          onTap: () => {
+                            Navigator.of(context)
+                                .pushNamed('/article_page', arguments: {
+                              'id': article.id,
+                              'image': article.image,
+                              'title': article.title,
+                              'Description': article.Description,
+                              'readTime': article.readTime,
+                              'date': article.date,
+                              'writerID': article.writerID,
+                            })
+                          },
+                        ),
+                      );
+                    });
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text("${snapshot.error}"),
+                );
+              }
+              return const Center(
+                  child: Text(
+                "No data",
+                style: TextStyle(fontSize: 30),
+              ));
+            }),
       ),
     );
   }
@@ -157,3 +167,4 @@ class _recentNewsCardState extends State<recentNewsCard> {
     );
   }
 }
+ 

@@ -5,7 +5,9 @@ import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:travelv2/repos/article_model.dart';
+import 'package:travelv2/backend/model/article_model.dart';
+import 'package:travelv2/config/constants.dart';
+
 
 enum ArticleAction { Fetch, Delete }
 
@@ -33,27 +35,17 @@ class NewsBloc {
 }
 
 Future<List<Article>> getNews() async {
-  final Dio dio = Dio();
-  const PROTOCOL = "http";
-  const DOMAIN = "10.0.2.2:3000";
   var newsModel;
 
   final String pathUrl = "$PROTOCOL://$DOMAIN/getUser";
   var response = await http.get(Uri.parse(pathUrl));
   if (response.statusCode == 200) {
     List<dynamic> body = jsonDecode(response.body);
-    //     var jsonString = response.body;
-    // var jsonMap = json.decode(jsonString);
-
     List<Article> articles =
         body.map((dynamic item) => Article.fromJson(item)).toList();
 
     return articles;
-
-    //newsModel = NewsModel.fromJson(jsonMap);
   } else {
     throw "NOOOOOO";
   }
-
-  // return newsModel;
 }

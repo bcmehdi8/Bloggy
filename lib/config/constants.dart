@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+//HTTP Server Values
+const PROTOCOL = "http";
+const DOMAIN = "10.0.2.2:3000";
+
 //Colors to use
 const kPrimaryColor = Color(0xFFfe7a42);
 const kTextColor = Color(0xFF3C4046);

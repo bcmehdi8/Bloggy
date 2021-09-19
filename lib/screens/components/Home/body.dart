@@ -28,10 +28,7 @@ class _BodyState extends State<Body> {
             HeaderTextSearchBox(size: size),
             categoriesHolder(),
             TitleWithMoreBtn(title: "Latest News", press: () {}),
-            Container(
-                width: size.width,
-                height: size.height - 150,
-                child: recentNews()),
+             recentNews(),
           ]),
     );
   }
