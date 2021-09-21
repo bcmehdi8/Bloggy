@@ -1,16 +1,15 @@
-# travelv2
+# Bloggy (Nighly Builds)
 
-A new Flutter project.
+## Changelog
+All notable changes to this project will be documented in this file.
 
-## Getting Started
+### V0.2 | 18-09-2021
+#### Added
+##### - New Writer Profile UI, to follow your favourite bloggers
+##### - Added Article Page, with classic reading experience(needs update)
+##### - BloC Integration for state Management including => (event, state, repository)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### V0.1 | 13-09-2021
+#### Added
+##### - Simple Home Screen UI to start
+##### - Establish DB Connection Backend using REST API, Nodejs 
