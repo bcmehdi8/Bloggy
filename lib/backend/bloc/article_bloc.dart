@@ -2,50 +2,31 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:ffi';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:travelv2/backend/events/article_events.dart';
 import 'package:travelv2/backend/model/article_model.dart';
+import 'package:travelv2/backend/repo/article_repo.dart';
+import 'package:travelv2/backend/states/article_states.dart';
 import 'package:travelv2/config/constants.dart';
 
+class ArticleBloc extends Bloc<ArticleEvents, ArticleState> {
+  ArticleRepository _repository;
+  ArticleBloc(ArticleState initialState, this._repository)
+      : super(initialState);
 
-enum ArticleAction { Fetch, Delete }
-
-class NewsBloc {
-  final _stateStreamController = StreamController<List<Article>>();
-  StreamSink<List<Article>> get _articleSink => _stateStreamController.sink;
-  Stream<List<Article>> get articleStream => _stateStreamController.stream;
-
-  final _eventStreamController = StreamController<ArticleAction>();
-  StreamSink<ArticleAction> get eventSink => _eventStreamController.sink;
-  Stream<ArticleAction> get _eventStream => _eventStreamController.stream;
-
-  NewsBloc() {
-    _eventStream.listen((event) async {
-      if (event == ArticleAction.Fetch) {
-        try {
-          var news = await getNews();
-          _articleSink.add(news);
-        } on Exception catch (e) {
-          _articleSink.addError("Something went wrong");
-        }
+  @override
+  Stream<ArticleState> mapEventToState(ArticleEvents event) async* {
+    if (event is FetchArticleList) {
+      yield ArticleLoadingState();
+      try {
+        var article = await _repository.getArticleListRepo();
+        yield FetchSuccessList(article: article);
+      } catch (e) {
+        yield ErrorState(message: e.toString());
       }
-    });
-  }
-}
-
-Future<List<Article>> getNews() async {
-  var newsModel;
-
-  final String pathUrl = "$PROTOCOL://$DOMAIN/getUser";
-  var response = await http.get(Uri.parse(pathUrl));
-  if (response.statusCode == 200) {
-    List<dynamic> body = jsonDecode(response.body);
-    List<Article> articles =
-        body.map((dynamic item) => Article.fromJson(item)).toList();
-
-    return articles;
-  } else {
-    throw "NOOOOOO";
+    }
   }
 }

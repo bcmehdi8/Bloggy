@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelv2/backend/repo/writer_repo.dart';
+import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/backend/bloc/writer_bloc.dart';
 import 'package:travelv2/backend/model/writer_model.dart';
@@ -14,12 +16,8 @@ class date_writer extends StatefulWidget {
 }
 
 class _date_writerState extends State<date_writer> {
-  final WriterBloc writerBloc = new WriterBloc();
-
   @override
   void initState() {
-    writerBloc.writerIdController = widget.data['writerID'];
-    writerBloc.eventSink.add(WriterAction.Fetch);
     super.initState();
   }
 
@@ -32,47 +30,40 @@ class _date_writerState extends State<date_writer> {
             horizontal: kDefaultPadding, vertical: kDefaultPadding / 1.1),
         height: size.height * 0.12,
         width: size.width,
-        color: Colors.amber.shade100,
         child: Row(
           children: [
-            StreamBuilder<Writer>(
-                stream: writerBloc.writerStream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError)
-                    // ignore: curly_braces_in_flow_control_structures
-                    return Center(
-                      child: Text("Error"),
-                    );
-                  if (snapshot.hasData) {
-                    var writerdata = snapshot.data;
-                    return InkWell(
-                      child: WriterCard(
-                          image: writerdata!.writerImage,
-                          name: writerdata.writerName,
-                          date: widget.data['date'],
-                          press: () {}),
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed('/writer_page', arguments: {
-                          'id': writerdata.writerID,
-                          'writerName': writerdata.writerName,
-                          'totalArticles': writerdata.totalArticles,
-                          'writerBio': writerdata.writerBio,
-                          'writerImage': writerdata.writerImage,
-                        });
-                      },
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("${snapshot.error}"),
-                    );
-                  }
-                  return const Center(
-                      child: Text(
-                    "No data",
-                    style: TextStyle(fontSize: 30),
-                  ));
-                })
+            BlocBuilder<WriterBlocc, WriterStates>(
+                // stream: newsBloc.articleStream,
+                builder: (context, state) {
+              if (state is LoadingState) {
+                CircularProgressIndicator();
+              } else if (state is FetchSuccess) {
+                var writerdata = state.writer;
+                return InkWell(
+                  child: WriterCard(
+                      image: writerdata!.writerImage,
+                      name: writerdata.writerName,
+                      date: widget.data['date'],
+                      press: () {}),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/writer_page', arguments: {
+                      'id': writerdata.writerID,
+                      'writerName': writerdata.writerName,
+                      'totalArticles': writerdata.totalArticles,
+                      'writerBio': writerdata.writerBio,
+                      'writerImage': writerdata.writerImage,
+                    });
+                  },
+                );
+              } else if (state is ErrorState) {
+                Text("ERROR DATA");
+              }
+              return const Center(
+                  child: Text(
+                "No data",
+                style: TextStyle(fontSize: 30),
+              ));
+            })
           ],
         ),
       ),
@@ -113,7 +104,7 @@ class _WriterCardState extends State<WriterCard> {
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 15),
         child: Container(
           height: size.height,
           width: 3,

@@ -24,7 +24,7 @@ Article.getAll = result => {
 };
 
 Article.getWriter = (writerID,result) => {
-  sqla = "SELECT  * FROM writer WHERE writerID ='"+writerID+"' LIMIT 1";
+  sqla = "SELECT * FROM writer WHERE writerID ='"+writerID+"' LIMIT 1";
   sql.query(sqla, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -35,6 +35,18 @@ Article.getWriter = (writerID,result) => {
     result(null, res);
   });
 };
+
+Article.getCategories = (result) => {
+  sql.query("SELECT * FROM category ", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    result(null, res);
+  });
+};
+
 
 
 

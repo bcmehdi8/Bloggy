@@ -1,7 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import, prefer_const_constructors_in_immutables
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:travelv2/backend/bloc/writer_bloc.dart';
+import 'package:travelv2/backend/events/writer_events.dart';
+import 'package:travelv2/backend/model/writer_model.dart';
+import 'package:travelv2/backend/repo/writer_repo.dart';
+import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/config/constants.dart';
 
 class writerPage extends StatefulWidget {
@@ -13,6 +21,23 @@ class writerPage extends StatefulWidget {
 }
 
 class _writerPageState extends State<writerPage> {
+  //WriterBlocc bloc;
+  late WriterBlocc bloc;
+  @override
+  void initState() {
+    // bloc.writerIdController = 1;
+    bloc = BlocProvider.of<WriterBlocc>(context);
+    bloc.writerIdController = widget.writerInfo['id'];
+    bloc.add(getWriterCard());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,8 +63,8 @@ class _writerPageState extends State<writerPage> {
                     height: 70,
                     child: CircleAvatar(
                       backgroundColor: Colors.blueAccent,
-                      backgroundImage: NetworkImage(
-                         widget.writerInfo['writerImage']),
+                      backgroundImage:
+                          NetworkImage(widget.writerInfo['writerImage']),
                       child: Text(
                         "",
                         style: TextStyle(
@@ -51,13 +76,27 @@ class _writerPageState extends State<writerPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 5),
-                    child: Text(
-                      widget.writerInfo['writerName'],
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 25,
-                          fontFamily: "NunitoSans"),
+                    child: BlocBuilder<WriterBlocc, WriterStates>(
+                      builder: (context, state) {
+                        if (state is InitialState) {
+                          return CircularProgressIndicator();
+                        } else if (state is LoadingState) {
+                          return CircularProgressIndicator();
+                        } else if (state is FetchSuccess) {
+                          return Text(
+                            //     widget.writerInfo['writerName'],
+                            state.writer!.writerName,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 25,
+                                fontFamily: "NunitoSans"),
+                          );
+                        } else if (state is ErrorState) {
+                          return ErrorWidget(state.message.toString());
+                        }
+                        return Container();
+                      },
                     ),
                   ),
                   Padding(

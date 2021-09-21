@@ -1,4 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelv2/backend/bloc/article_bloc.dart';
+import 'package:travelv2/backend/bloc/category_bloc.dart';
+import 'package:travelv2/backend/bloc/writer_bloc.dart';
+import 'package:travelv2/backend/events/writer_events.dart';
+import 'package:travelv2/backend/repo/article_repo.dart';
+import 'package:travelv2/backend/repo/category_repo.dart';
+import 'package:travelv2/backend/repo/writer_repo.dart';
+import 'package:travelv2/backend/states/article_states.dart';
+import 'package:travelv2/backend/states/category_states.dart';
+import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/main.dart';
 import 'package:travelv2/screens/home.dart';
 import 'package:travelv2/screens/article_page.dart';
@@ -8,26 +19,45 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
-
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => Home());
+        return MaterialPageRoute(
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<ArticleBloc>(
+                      create: (_) => ArticleBloc(
+                          ArticleInitialState(), ArticleRepository()),
+                    ),
+                    BlocProvider<CategoryBloc>(
+                      create: (_) => CategoryBloc(
+                          CategoryInitialState(), CategoryRepository()),
+                    ),
+                  ],
+                  child: Home(),
+                ));
       case '/article_page':
         if (args is Map) {
           return MaterialPageRoute(
-            // ignore: prefer_const_constructors
-            builder: (_) => articlePage(
-              datax: args,
-            ),
-          );
+              // ignore: prefer_const_constructors
+              builder: (_) => BlocProvider<WriterBlocc>(
+                    create: (_) =>
+                        WriterBlocc(InitialState(), WriterRepository()),
+                    child: articlePage(
+                      datax: args,
+                    ),
+                  ));
         }
         return _errorRoute();
       case '/writer_page':
         if (args is Map) {
           return MaterialPageRoute(
               // ignore: prefer_const_constructors
-              builder: (_) => writerPage(
-                    writerInfo: args,
+              builder: (_) => BlocProvider<WriterBlocc>(
+                    create: (_) =>
+                        WriterBlocc(InitialState(), WriterRepository()),
+                    child: writerPage(
+                      writerInfo: args,
+                    ),
                   ));
         }
         return _errorRoute();

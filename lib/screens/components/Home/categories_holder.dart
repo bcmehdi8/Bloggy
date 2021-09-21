@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelv2/backend/bloc/category_bloc.dart';
+import 'package:travelv2/backend/states/category_states.dart';
 import 'package:travelv2/config/constants.dart';
 
 class categoriesHolder extends StatefulWidget {
@@ -18,27 +21,49 @@ class _categoriesHolderState extends State<categoriesHolder> {
       //  color: Colors.cyan,
       height: size.height * 0.14,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Flexible(
-              child: ListView.builder(
+          Flexible(child: BlocBuilder<CategoryBloc, CategoryState>(
+              // stream: newsBloc.articleStream,
+              builder: (context, state) {
+            if (state is CategoryLoadingState) {
+              CircularProgressIndicator();
+            } else if (state is CategoryFetchSuccessList) {
+              return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 4,
+                  itemCount: state.category.length,
                   itemBuilder: (BuildContext context, int index) {
+                    var data = state.category[index];
                     return Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.only(
+                          left: kDefaultPadding),
                       child: Container(
-                        width: 50,
-                        height: 40,
+                     
+                        width: 58,
+                        height: 45,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.network(
-                                "https://cdn-icons-png.flaticon.com/512/77/77305.png"),
-                            Text("Movies")
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(data.categoryImage),
+                            ),
+                            Text(data.categoryName),
                           ],
                         ),
                       ),
                     );
-                  })),
+                  });
+            } else if (state is CategoryErrorState) {
+              Text("ERROR DATA");
+            }
+            return const Center(
+                child: Text(
+              "No data",
+              style: TextStyle(fontSize: 30),
+            ));
+          })),
         ],
       ),
     );

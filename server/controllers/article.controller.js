@@ -14,7 +14,7 @@ exports.findAll = (req, res) => {
     });
   };
 
-  // Retrieve all Customers from the database.
+  // Retrieve a Writer
 exports.findWriter = (req, res) => {
   article.getWriter(req.query.writerID,(err, data) => {
     if (err)
@@ -32,3 +32,18 @@ exports.findWriter = (req, res) => {
         res.send(object);}
   });
 };
+  // Retrieve all categories
+  exports.findCategories = (req, res) => {
+    article.getCategories((err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving writer."
+        });   
+      else {
+
+      //  let array = data; 
+      // let object = array.reduce((prev, curr) => ({ ...prev, ...curr }), {}); 
+          res.send(data);}
+    });
+  };

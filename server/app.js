@@ -11,10 +11,12 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-//Create User
+//Find All Articles
 app.get('/getUser', articles.findAll)
-//Create User
+//Get a Specific Writer
 app.get('/getWriter', articles.findWriter)
+//Get Categories
+app.get('/getCategories', articles.findCategories)
 
 app.listen(3000);
 
