@@ -13,6 +13,7 @@ import 'package:travelv2/backend/states/article_states.dart';
 import 'package:travelv2/config/constants.dart';
 
 class ArticleBloc extends Bloc<ArticleEvents, ArticleState> {
+  int writerID = 0;
   ArticleRepository _repository;
   ArticleBloc(ArticleState initialState, this._repository)
       : super(initialState);
@@ -23,6 +24,13 @@ class ArticleBloc extends Bloc<ArticleEvents, ArticleState> {
       yield ArticleLoadingState();
       try {
         var article = await _repository.getArticleListRepo();
+        yield FetchSuccessList(article: article);
+      } catch (e) {
+        yield ErrorState(message: e.toString());
+      }
+    } else if (event is FetchPopularWriterArticles) {
+      try {
+        var article = await _repository.getWriterPopularPosts(writerID);
         yield FetchSuccessList(article: article);
       } catch (e) {
         yield ErrorState(message: e.toString());

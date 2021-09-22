@@ -33,7 +33,7 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hey, James!",
+                        "Hey, Mehdi!",
                         style: TextStyle(
                             color: Colors.black54,
                             fontSize: 17,

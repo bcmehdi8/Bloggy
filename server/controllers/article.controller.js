@@ -47,3 +47,15 @@ exports.findWriter = (req, res) => {
           res.send(data);}
     });
   };
+    // Retrieve all categories
+    exports.findWriterPopularPosts = (req, res) => {
+      article.getWriterPopularPosts(req.query.writerID,(err, data) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while retrieving writer."
+          });   
+        else {
+            res.send(data);}
+      });
+    };

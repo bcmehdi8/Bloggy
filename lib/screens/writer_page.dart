@@ -1,16 +1,25 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import, prefer_const_constructors_in_immutables, unnecessary_new
 
 import 'dart:developer';
 
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:travelv2/backend/bloc/article_bloc.dart';
 import 'package:travelv2/backend/bloc/writer_bloc.dart';
+import 'package:travelv2/backend/events/article_events.dart';
 import 'package:travelv2/backend/events/writer_events.dart';
 import 'package:travelv2/backend/model/writer_model.dart';
 import 'package:travelv2/backend/repo/writer_repo.dart';
 import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/config/constants.dart';
+import 'package:travelv2/screens/components/Home/title_no_btn.dart';
+import 'package:travelv2/screens/components/Writer/writer_picture_badge.dart';
+
+import 'components/Home/title_more_btn.dart';
+import 'components/Writer/writer_posts_carousel.dart';
 
 class writerPage extends StatefulWidget {
   final Map writerInfo;
@@ -21,14 +30,18 @@ class writerPage extends StatefulWidget {
 }
 
 class _writerPageState extends State<writerPage> {
-  //WriterBlocc bloc;
   late WriterBlocc bloc;
+  late ArticleBloc articlebloc;
+
   @override
   void initState() {
     // bloc.writerIdController = 1;
     bloc = BlocProvider.of<WriterBlocc>(context);
+    articlebloc = BlocProvider.of<ArticleBloc>(context);
+    articlebloc.writerID = widget.writerInfo['id'];
     bloc.writerIdController = widget.writerInfo['id'];
     bloc.add(getWriterCard());
+    articlebloc.add(FetchPopularWriterArticles());
     super.initState();
   }
 
@@ -45,85 +58,21 @@ class _writerPageState extends State<writerPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: BackButton(color: Colors.black),
+        leading: new IconButton(
+          icon: new Icon(
+            EvaIcons.arrowIosBack,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: size.height * 0.23,
-              width: size.width,
-              padding: EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding, vertical: kDefaultPadding / 1.5),
-              color: Colors.black12,
-              child: Column(
-                children: [
-                  Container(
-                    width: 70,
-                    height: 70,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.blueAccent,
-                      backgroundImage:
-                          NetworkImage(widget.writerInfo['writerImage']),
-                      child: Text(
-                        "",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: BlocBuilder<WriterBlocc, WriterStates>(
-                      builder: (context, state) {
-                        if (state is InitialState) {
-                          return CircularProgressIndicator();
-                        } else if (state is LoadingState) {
-                          return CircularProgressIndicator();
-                        } else if (state is FetchSuccess) {
-                          return Text(
-                            //     widget.writerInfo['writerName'],
-                            state.writer!.writerName,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 25,
-                                fontFamily: "NunitoSans"),
-                          );
-                        } else if (state is ErrorState) {
-                          return ErrorWidget(state.message.toString());
-                        }
-                        return Container();
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Top Author",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 15,
-                              fontFamily: "NunitoSans"),
-                        ),
-                        Image.network(
-                          "https://freepikpsd.com/media/2019/10/star-vector-png-5-Transparent-Images.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
+            writerPictureBadge(writerInfo: widget.writerInfo),
+            TitleWithNoBtn(title: "Popular Posts", press: () {}),
+            writerbody(),
           ],
         ),
       ),

@@ -36,10 +36,8 @@ class _categoriesHolderState extends State<categoriesHolder> {
                   itemBuilder: (BuildContext context, int index) {
                     var data = state.category[index];
                     return Padding(
-                      padding: const EdgeInsets.only(
-                          left: kDefaultPadding),
+                      padding: const EdgeInsets.only(left: kDefaultPadding),
                       child: Container(
-                     
                         width: 58,
                         height: 45,
                         child: Column(
@@ -48,6 +46,9 @@ class _categoriesHolderState extends State<categoriesHolder> {
                           children: [
                             CircleAvatar(
                               backgroundImage: NetworkImage(data.categoryImage),
+                            ),
+                            SizedBox(
+                              height: 7,
                             ),
                             Text(data.categoryName),
                           ],

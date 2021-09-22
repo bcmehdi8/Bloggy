@@ -48,13 +48,34 @@ class RouteGenerator {
                   ));
         }
         return _errorRoute();
-      case '/writer_page':
+              case '/comments':
         if (args is Map) {
           return MaterialPageRoute(
               // ignore: prefer_const_constructors
               builder: (_) => BlocProvider<WriterBlocc>(
                     create: (_) =>
                         WriterBlocc(InitialState(), WriterRepository()),
+                    child: articlePage(
+                      datax: args,
+                    ),
+                  ));
+        }
+        return _errorRoute();
+      case '/writer_page':
+        if (args is Map) {
+          return MaterialPageRoute(
+              // ignore: prefer_const_constructors
+              builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider<WriterBlocc>(
+                        create: (_) =>
+                            WriterBlocc(InitialState(), WriterRepository()),
+                      ),
+                      BlocProvider<ArticleBloc>(
+                        create: (_) => ArticleBloc(
+                            ArticleInitialState(), ArticleRepository()),
+                      ),
+                    ],
                     child: writerPage(
                       writerInfo: args,
                     ),

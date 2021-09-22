@@ -39,6 +39,10 @@ dependencies:
   flutter_bloc: ^7.2.0
   http: ^0.13.3
   equatable: ^2.0.3
+  flutter_icons: ^1.1.0
+  line_icons: ^2.0.1
+  eva_icons_flutter: ^3.0.2
+  animations: ^2.0.1
 
 dev_dependencies:
   flutter_test:

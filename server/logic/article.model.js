@@ -47,6 +47,17 @@ Article.getCategories = (result) => {
   });
 };
 
+Article.getWriterPopularPosts = (writerID,result) => {
+  sqla = "SELECT * FROM articles WHERE writerID ='"+writerID+"' ORDER BY views DESC LIMIT 3;";
+  sql.query(sqla, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    result(null, res);
+  });
+};
 
 
 

@@ -27,7 +27,7 @@ class _recentNewsState extends State<recentNews> {
 
     return IntrinsicHeight(
       child: Container(
-        height: 300,
+        height: 1000,
         child: BlocBuilder<ArticleBloc, ArticleState>(
             // stream: newsBloc.articleStream,
             builder: (context, state) {
@@ -36,8 +36,7 @@ class _recentNewsState extends State<recentNews> {
             return Center(
               child: Text("Error"),
             );
-          }else
-          if (state is FetchSuccessList) {
+          } else if (state is FetchSuccessList) {
             return ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
@@ -52,14 +51,7 @@ class _recentNewsState extends State<recentNews> {
                           title: article.title,
                           date: article.date,
                           readTime: article.readTime,
-                          press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Home(),
-                              ),
-                            );
-                          }),
+                          press: () {}),
                       onTap: () => {
                         Navigator.of(context)
                             .pushNamed('/article_page', arguments: {

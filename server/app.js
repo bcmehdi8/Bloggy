@@ -17,6 +17,8 @@ app.get('/getUser', articles.findAll)
 app.get('/getWriter', articles.findWriter)
 //Get Categories
 app.get('/getCategories', articles.findCategories)
+//Get Writer's Popular Posts
+app.get('/getWriterPopularPosts', articles.findWriterPopularPosts)
 
 app.listen(3000);
 

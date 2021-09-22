@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -57,17 +58,13 @@ AppBar appBarHolder() {
     ),
     elevation: 0,
     actions: [
-      Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.rotationY(math.pi),
-        child: IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
-          onPressed: () {},
+      IconButton(
+        icon: Icon(
+          EvaIcons.menu2,
+          color: Colors.black,
         ),
-      )
+        onPressed: () {},
+      ),
     ],
   );
 }

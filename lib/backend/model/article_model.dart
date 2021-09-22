@@ -34,6 +34,7 @@ class Article {
   final String? Description;
   final int readTime;
   final String date;
+  final String? category;
   final int? writerID;
 
   Article({
@@ -43,6 +44,7 @@ class Article {
     this.Description,
     required this.readTime,
     required this.date,
+     this.category,
     this.writerID,
   });
 
@@ -54,6 +56,7 @@ class Article {
       Description: json['Description'],
       readTime: json['readTime'],
       date: json['date'],
+      category: json['category'],
       writerID: json['writerID'],
     );
   }
@@ -64,6 +67,7 @@ class Article {
         "Description": Description,
         "readTime": readTime,
         "date": date,
+        "category": category,
         "writerID": writerID,
       };
 }
