@@ -59,6 +59,18 @@ Article.getWriterPopularPosts = (writerID,result) => {
   });
 };
 
+Article.getComments = (articleID,result) => {
+  sqla = "SELECT `commentID`, `articleID`, `userName`,`userImage`, `commentContent`, `commentDate`, `commentLikes`, `commentReplies` FROM comment INNER JOIN users ON comment.userID = users.userID WHERE articleID='"+articleID+"' ";
+  sql.query(sqla, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+    result(null, res);
+  });
+};
+
 
 
 module.exports = Article;

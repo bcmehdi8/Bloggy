@@ -20,7 +20,9 @@ class _ArticleTitleDescriptionState extends State<ArticleTitleDescription> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return IntrinsicHeight(
-      child: Column(children: [
+      child: Column(
+       
+        children: [
         Padding(
             padding: EdgeInsets.only(
           top: kDefaultPadding / 3,

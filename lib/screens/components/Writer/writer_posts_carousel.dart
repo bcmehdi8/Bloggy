@@ -40,7 +40,7 @@ class _writerbodyState extends State<writerbody> {
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed('/article_page', arguments: {
-                      'id': data.id,
+                      'id': data.articleID,
                       'image': data.image,
                       'title': data.title,
                       'Description': data.Description,

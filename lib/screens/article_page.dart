@@ -81,7 +81,18 @@ class _articlePageState extends State<articlePage> {
           ],
         ),
       ),
-      floatingActionButton: CustomFABWidget(data: widget.datax,),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.of(context).pushNamed('/comments', arguments: {
+          'articleID': widget.datax['articleID'],
+          'image': widget.datax['image'],
+          'title': widget.datax['title'],
+          'Description': widget.datax['Description'],
+          'readTime': widget.datax['readTime'],
+          'date': widget.datax['date'],
+          'writerID': widget.datax['writerID'],
+        });
+      }),
+      //  floatingActionButton: CustomFABWidget(data: widget.datax,),
       // floatingActionButton: OpenContainer(
       //   openBuilder: (context, _) => commentsPage(),
       //   closedBuilder: (context, _) {},

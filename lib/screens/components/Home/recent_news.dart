@@ -55,7 +55,7 @@ class _recentNewsState extends State<recentNews> {
                       onTap: () => {
                         Navigator.of(context)
                             .pushNamed('/article_page', arguments: {
-                          'id': article.id,
+                          'articleID': article.articleID,
                           'image': article.image,
                           'title': article.title,
                           'Description': article.Description,

@@ -57,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  comment_box:
+    dependency: "direct main"
+    description:
+      name: comment_box
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.16"
   cupertino_icons:
     dependency: "direct main"
     description:

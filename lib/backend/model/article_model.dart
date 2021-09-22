@@ -28,7 +28,7 @@ class NewsModel {
 }
 
 class Article {
-  final int id;
+  final int articleID;
   final String image;
   final String title;
   final String? Description;
@@ -38,7 +38,7 @@ class Article {
   final int? writerID;
 
   Article({
-    required this.id,
+    required this.articleID,
     required this.image,
     required this.title,
     this.Description,
@@ -50,7 +50,7 @@ class Article {
 
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
-      id: json['id'],
+      articleID: json['articleID'],
       image: json['image'],
       title: json['title'],
       Description: json['Description'],
@@ -61,7 +61,7 @@ class Article {
     );
   }
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "articleID": articleID,
         "image": image,
         "title": title,
         "Description": Description,
@@ -70,28 +70,4 @@ class Article {
         "category": category,
         "writerID": writerID,
       };
-}
-
-enum Id { THE_WALL_STREET_JOURNAL }
-
-final idValues =
-    EnumValues({"the-wall-street-journal": Id.THE_WALL_STREET_JOURNAL});
-
-enum Name { THE_WALL_STREET_JOURNAL }
-
-final nameValues =
-    EnumValues({"The Wall Street Journal": Name.THE_WALL_STREET_JOURNAL});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
-    return reverseMap;
-  }
 }
