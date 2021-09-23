@@ -13,8 +13,6 @@ import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/screens/comments.dart';
 import 'components/Article/article_title_description.dart';
 import 'components/Article/date_writer_card.dart';
-import 'components/Home/custom_fab_widget.dart';
-
 class articlePage extends StatefulWidget {
   final Map datax;
 
@@ -81,17 +79,21 @@ class _articlePageState extends State<articlePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigator.of(context).pushNamed('/comments', arguments: {
-          'articleID': widget.datax['articleID'],
-          'image': widget.datax['image'],
-          'title': widget.datax['title'],
-          'Description': widget.datax['Description'],
-          'readTime': widget.datax['readTime'],
-          'date': widget.datax['date'],
-          'writerID': widget.datax['writerID'],
-        });
-      }),
+      floatingActionButton: FloatingActionButton(
+          focusColor: Colors.cyan,
+          backgroundColor: kPrimaryColor,
+          child: Icon(LineIcons.commentDots, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pushNamed('/comments', arguments: {
+              'articleID': widget.datax['articleID'],
+              'image': widget.datax['image'],
+              'title': widget.datax['title'],
+              'Description': widget.datax['Description'],
+              'readTime': widget.datax['readTime'],
+              'date': widget.datax['date'],
+              'writerID': widget.datax['writerID'],
+            });
+          }),
       //  floatingActionButton: CustomFABWidget(data: widget.datax,),
       // floatingActionButton: OpenContainer(
       //   openBuilder: (context, _) => commentsPage(),

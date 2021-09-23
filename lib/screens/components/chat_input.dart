@@ -26,8 +26,6 @@ class ChatInputField extends StatelessWidget {
       child: SafeArea(
         child: Row(
           children: [
-            Icon(Icons.mic, color: kPrimaryColor),
-            SizedBox(width: kDefaultPadding),
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(
@@ -51,7 +49,7 @@ class ChatInputField extends StatelessWidget {
                     Expanded(
                       child: TextField(
                         decoration: InputDecoration(
-                          hintText: "Type message",
+                          hintText: "Type comment",
                           border: InputBorder.none,
                         ),
                       ),
