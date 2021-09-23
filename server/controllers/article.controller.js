@@ -47,7 +47,7 @@ exports.findWriter = (req, res) => {
           res.send(data);}
     });
   };
-    // Retrieve all categories
+    // Retrieve all writer's popular posts
     exports.findWriterPopularPosts = (req, res) => {
       article.getWriterPopularPosts(req.query.writerID,(err, data) => {
         if (err)
@@ -59,7 +59,7 @@ exports.findWriter = (req, res) => {
             res.send(data);}
       });
     };
-        // Retrieve all categories
+        // Retrieve all comments
         exports.findComments = (req, res) => {
           article.getComments(req.query.articleID,(err, data) => {
             if (err)
@@ -71,3 +71,17 @@ exports.findWriter = (req, res) => {
                 res.send(data);}
           });
         };
+                // create a comment
+                exports.createComment = (req, res) => {
+                  article.newComment(req.body.articleID,req.body.userID,req.body.commentContent,(err, data) => {
+                    if (err)
+                      res.status(500).send({
+                        message:
+                          err.message || "Some error occurred while retrieving writer."
+                      });   
+                    else {
+                      console.log('record inserted');
+                     
+                        res.send(data);}
+                  });
+                };

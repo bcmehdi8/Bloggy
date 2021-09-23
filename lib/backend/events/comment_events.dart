@@ -11,3 +11,5 @@ class CommentsEvents extends Equatable {
 class FetchComment extends CommentsEvents {}
 
 class FetchCommentsList extends CommentsEvents {}
+
+class AddComment extends CommentsEvents {}

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:travelv2/backend/bloc/comment_bloc.dart';
 import 'package:travelv2/backend/events/comment_events.dart';
+import 'package:travelv2/backend/model/comments_model.dart';
 import 'package:travelv2/backend/states/comment_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:comment_box/comment/comment.dart';
@@ -15,7 +16,7 @@ import 'components/Article/chat_input.dart';
 class commentsPage extends StatefulWidget {
   final Map data;
   Stream? massegeStream;
-   commentsPage({Key? key, required this.data}) : super(key: key);
+  commentsPage({Key? key, required this.data}) : super(key: key);
 
   @override
   _commentsPageState createState() => _commentsPageState();
@@ -23,20 +24,24 @@ class commentsPage extends StatefulWidget {
 
 class _commentsPageState extends State<commentsPage> {
   late CommentsBloc commentsBloc;
+  final commentBlocc = CommentsBlocc();
 
   @override
   void initState() {
+    commentBlocc.eventSink.add(CommentAction.Fetch);
+    commentBlocc.articleID = widget.data['articleID'];
     commentsBloc = BlocProvider.of<CommentsBloc>(context);
     commentsBloc.add(FetchCommentsList());
     commentsBloc.articleID = widget.data['articleID'];
+
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   commentsBloc.close();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    commentsBloc.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,20 +65,19 @@ class _commentsPageState extends State<commentsPage> {
       ),
       body: Column(
         children: [
-          BlocBuilder<CommentsBloc, CommentsState>(
-            builder: (context, state) {
-              if (state is CommentsInitialState) {
-                return CircularProgressIndicator();
-              } else if (state is CommentsLoadingState) {
-                return CircularProgressIndicator();
-              } else if (state is CommentsFetchSuccessList) {
+          StreamBuilder<List<Comments>>(
+            stream: commentBlocc.commentStream,
+            builder: (context,AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+              
                 return Expanded(
                   child: ListView.builder(
                       scrollDirection: Axis.vertical,
-                      itemCount: state.comments.length,
+                      itemCount: snapshot.data!.length,
                       //shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        var data = state.comments[index];
+                        var data = snapshot.data![index];
+
                         return commentsList(
                             userImage: data.commenterImage,
                             userName: data.commenterName,
@@ -82,10 +86,6 @@ class _commentsPageState extends State<commentsPage> {
                             likes: data.commentLike,
                             replies: data.commentReplies);
                       }),
-                );
-              } else if (state is CommentsErrorState) {
-                return Center(
-                  child: Text("ERROR BLOC"),
                 );
               }
               return Text("ERROR while retrieving comment");

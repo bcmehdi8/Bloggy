@@ -70,6 +70,18 @@ Article.getComments = (articleID,result) => {
     result(null, res);
   });
 };
+Article.newComment = (articleID, userID, commentContent, result) => {
+  sql.query("INSERT INTO comment(articleID, userID, commentContent, commentLikes, commentReplies) VALUES('"+articleID+"','"+userID+"','"+commentContent+"',0,0) ", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    console.log("created comment ");
+    result(null, { result});
+  });
+};
 
 
 

@@ -21,6 +21,8 @@ app.get('/getCategories', articles.findCategories)
 app.get('/getWriterPopularPosts', articles.findWriterPopularPosts)
 //Get Post's Comments
 app.get('/getComments', articles.findComments)
+//insert Post's Comment
+app.post('/postComment', articles.createComment)
 
 app.listen(3000);
 

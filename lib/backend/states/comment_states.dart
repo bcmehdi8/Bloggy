@@ -26,3 +26,4 @@ class CommentsErrorState extends CommentsState {
   String message;
   CommentsErrorState({required this.message});
 }
+class CommentAddedState extends CommentsState {}
