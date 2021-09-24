@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📅 V0.1.9 | 24-09-2021
 #### Added
-##### - New Comments section Added, Now you can leaver a thoughts on articles
+##### - New Comments section Added, Now you can read or leave your thoughts on articles
 ##### - Now you can see a new Carousel of writer's popular posts on Writer Page
 #### Fixed
 ##### - Fix Memory Leak issue while navigating to Writer Profile
