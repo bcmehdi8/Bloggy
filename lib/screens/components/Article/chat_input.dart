@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,8 +14,9 @@ import 'package:travelv2/screens/comments.dart';
 
 class ChatInputField extends StatefulWidget {
   final Map data;
+  ScrollController scrollController;
 
-  const ChatInputField({Key? key, required this.data}) : super(key: key);
+   ChatInputField({Key? key, required this.data, required this.scrollController}) : super(key: key);
 
   @override
   State<ChatInputField> createState() => _ChatInputFieldState();
@@ -23,12 +26,13 @@ class _ChatInputFieldState extends State<ChatInputField> {
   TextEditingController commentController = TextEditingController();
   late CommentsBloc commentsBloc;
   final commentBlocc = CommentsBlocc();
+  late Timer _timer;
+
   @override
   void initState() {
     commentsBloc = BlocProvider.of<CommentsBloc>(context);
-      commentsBloc.add(FetchCommentsList());
-    commentBlocc.eventSink.add(CommentAction.Fetch);
     commentBlocc.articleID = widget.data['articleID'];
+      
     super.initState();
   }
 
@@ -114,33 +118,25 @@ class _ChatInputFieldState extends State<ChatInputField> {
     commentsBloc.articleID = widget.data['articleID'];
     commentsBloc.userID = 1;
     commentsBloc.commentContent = commentController.text;
+    commentsBloc.add(AddComment());
+    commentBlocc.eventSink.add(CommentAction.Fetch);
+    FocusScope.of(context).unfocus();
+     _timer = Timer(Duration(seconds: 1),() {
+setState(() {
+  widget.scrollController.animateTo(
+      widget.scrollController.position.maxScrollExtent,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );  
+});
 
-    BlocListener<CommentsBloc, CommentsState>(
-      listener: (context, state) {
-        if (state is CommentAddedState) {
-          print("DONEEEEEEEEEE");
-          commentsBloc.add(FetchCommentsList());
-        }
-      },
-      child: BlocBuilder<CommentsBloc, CommentsState>(
-        builder: (context, state) {
-          if (state is CommentsInitialState) {
-            return CircularProgressIndicator();
-          } else if (state is CommentsLoadingState) {
-            return CircularProgressIndicator();
-          } else if (state is CommentAddedState) {
-           commentBlocc.eventSink.add(CommentAction.Fetch);
-            
-          } else if (state is CommentsErrorState) {
-            return Center(
-              child: Text("ERROR BLOC can't be Commented"),
-            );
-          }
-          return Text("ERROR While Commenting");
-        },
-      ),
-    );
-     commentsBloc.add(AddComment());
-     commentsBloc.add(FetchCommentsList());
+     });
+  
+
+   
+
+    commentController.text = "";
+
+    //  commentsBloc.add(FetchCommentsList());
   }
 }

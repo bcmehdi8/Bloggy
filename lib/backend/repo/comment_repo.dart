@@ -16,6 +16,7 @@ class CommentsRepository {
       List<dynamic> body = jsonDecode(response.body);
       List<Comments> comments =
           body.map((dynamic item) => Comments.fromJson(item)).toList();
+      print("Comment ADDED!");
       return comments;
     } else {
       throw "comments Not FOUND";
@@ -23,13 +24,12 @@ class CommentsRepository {
   }
 
   Future postComment(int ArticleID, dynamic UserID, String Content) async {
-    // final String pathUrl =
-    //     "$PROTOCOL://$DOMAIN/postComment?articleID=$ArticleID&userID=$userID&commentContent=$Content";
     final String pathUrl = "$PROTOCOL://$DOMAIN/postComment";
     String articleID = jsonEncode(ArticleID);
     String userID = jsonEncode(UserID);
     String commentContent = jsonEncode(Content);
     print(Content);
+   
     var response = await dio.post(pathUrl,
         data: {
           'articleID': articleID,
@@ -39,8 +39,7 @@ class CommentsRepository {
         options: Options(headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         }));
-    await getCommentsListRepo(ArticleID);
-    // var response = await http.get(Uri.parse(pathUrl));
+
     print("The response status code is :" + response.statusCode.toString());
     if (response.statusCode == 200) {
       return response.data;

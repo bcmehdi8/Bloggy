@@ -75,11 +75,11 @@ class CommentsBloc extends Bloc<CommentsEvents, CommentsState> {
       yield CommentsLoadingState();
       try {
         _repository.postComment(articleID, userID, commentContent);
-        yield CommentAddedState();
-        var comments = await _repository.getCommentsListRepo(articleID);
-        yield CommentsFetchSuccessList(comments: comments);
-
+        // var comments = await _repository.getCommentsListRepo(articleID);
+        // yield CommentsFetchSuccessList(comments: comments);
+  
         commentBlocc.eventSink.add(CommentAction.Fetch);
+        yield CommentAddedState();
       } catch (e) {
         print(e.toString());
         yield CommentsErrorState(message: e.toString());

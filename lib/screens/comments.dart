@@ -1,11 +1,15 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:async';
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:travelv2/backend/bloc/comment_bloc.dart';
 import 'package:travelv2/backend/events/comment_events.dart';
+import 'package:travelv2/backend/model/comments_model.dart';
+import 'package:travelv2/backend/repo/comment_repo.dart';
 import 'package:travelv2/backend/states/comment_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:comment_box/comment/comment.dart';
@@ -15,28 +19,40 @@ import 'components/Article/chat_input.dart';
 class commentsPage extends StatefulWidget {
   final Map data;
   Stream? massegeStream;
-   commentsPage({Key? key, required this.data}) : super(key: key);
+  commentsPage({Key? key, required this.data}) : super(key: key);
 
   @override
   _commentsPageState createState() => _commentsPageState();
 }
 
 class _commentsPageState extends State<commentsPage> {
+  StreamController _streamController = StreamController();
   late CommentsBloc commentsBloc;
+  final commentBlocc = CommentsBlocc();
+   ScrollController _scrollController = new ScrollController();
+ // late Timer _timer;
 
   @override
   void initState() {
+    commentBlocc.articleID = widget.data['articleID'];
+    commentBlocc.eventSink.add(CommentAction.Fetch);
+    commentBlocc.articleID = widget.data['articleID'];
     commentsBloc = BlocProvider.of<CommentsBloc>(context);
     commentsBloc.add(FetchCommentsList());
     commentsBloc.articleID = widget.data['articleID'];
+    //Check the server every 5 seconds
+    // _timer = Timer.periodic(Duration(seconds: 1),
+    //     (timer) => commentBlocc.eventSink.add(CommentAction.Fetch));
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   commentsBloc.close();
-  //   super.dispose();
-  // }
+  CommentsRepository _commentsRepository = new CommentsRepository();
+  @override
+  void dispose() {
+    commentsBloc.close();
+   // if (_timer.isActive) _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,20 +76,22 @@ class _commentsPageState extends State<commentsPage> {
       ),
       body: Column(
         children: [
-          BlocBuilder<CommentsBloc, CommentsState>(
-            builder: (context, state) {
-              if (state is CommentsInitialState) {
+          FutureBuilder(
+            future: _commentsRepository.getCommentsListRepo(widget.data['articleID']),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasError) {
                 return CircularProgressIndicator();
-              } else if (state is CommentsLoadingState) {
+              } else if (snapshot is CommentsLoadingState) {
                 return CircularProgressIndicator();
-              } else if (state is CommentsFetchSuccessList) {
+              } else if (snapshot.hasData) {
                 return Expanded(
                   child: ListView.builder(
+                    controller: _scrollController,
                       scrollDirection: Axis.vertical,
-                      itemCount: state.comments.length,
+                      itemCount: snapshot.data!.length,
                       //shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        var data = state.comments[index];
+                        var data = snapshot.data![index];
                         return commentsList(
                             userImage: data.commenterImage,
                             userName: data.commenterName,
@@ -83,16 +101,13 @@ class _commentsPageState extends State<commentsPage> {
                             replies: data.commentReplies);
                       }),
                 );
-              } else if (state is CommentsErrorState) {
-                return Center(
-                  child: Text("ERROR BLOC"),
-                );
+              
               }
               return Text("ERROR while retrieving comment");
             },
           ),
           //Spacer(),
-          ChatInputField(data: widget.data),
+          ChatInputField(data: widget.data, scrollController: _scrollController,),
         ],
       ),
     );
