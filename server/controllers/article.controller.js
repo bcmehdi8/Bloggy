@@ -71,9 +71,13 @@ exports.findWriter = (req, res) => {
                 res.send(data);}
           });
         };
-                // create a comment
+                //Create a comment
                 exports.createComment = (req, res) => {
-                  article.newComment(req.body.articleID,req.body.userID,req.body.commentContent,(err, data) => {
+                  article.newComment(
+                    req.body.articleID,
+                    req.body.userID,
+                    req.body.commentContent,
+                    (err, data) => {
                     if (err)
                       res.status(500).send({
                         message:

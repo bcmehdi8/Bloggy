@@ -1,7 +1,4 @@
 const express = require('express');
-//const queryRoute = require('./router/routes');
-const {getLatestPosts} = require('./logic/queries');
-const routing = require('./router/article.routes')
 const articles = require("./controllers/article.controller"); 
 
 

@@ -15,14 +15,17 @@ import 'package:travelv2/screens/comments.dart';
 class ChatInputField extends StatefulWidget {
   final Map data;
   ScrollController scrollController;
+  
 
-   ChatInputField({Key? key, required this.data, required this.scrollController}) : super(key: key);
+  ChatInputField({Key? key, required this.data, required this.scrollController})
+      : super(key: key);
 
   @override
   State<ChatInputField> createState() => _ChatInputFieldState();
 }
 
 class _ChatInputFieldState extends State<ChatInputField> {
+  
   TextEditingController commentController = TextEditingController();
   late CommentsBloc commentsBloc;
   final commentBlocc = CommentsBlocc();
@@ -32,7 +35,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
   void initState() {
     commentsBloc = BlocProvider.of<CommentsBloc>(context);
     commentBlocc.articleID = widget.data['articleID'];
-      
+
     super.initState();
   }
 
@@ -119,21 +122,18 @@ class _ChatInputFieldState extends State<ChatInputField> {
     commentsBloc.userID = 1;
     commentsBloc.commentContent = commentController.text;
     commentsBloc.add(AddComment());
+    print("button pressed");
     commentBlocc.eventSink.add(CommentAction.Fetch);
     FocusScope.of(context).unfocus();
-     _timer = Timer(Duration(seconds: 1),() {
-setState(() {
-  widget.scrollController.animateTo(
-      widget.scrollController.position.maxScrollExtent,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );  
-});
-
-     });
-  
-
-   
+    _timer = Timer(Duration(seconds: 1), () {
+      setState(() {
+        widget.scrollController.animateTo(
+          widget.scrollController.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
+      });
+    });
 
     commentController.text = "";
 

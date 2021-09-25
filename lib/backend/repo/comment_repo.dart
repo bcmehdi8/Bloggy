@@ -6,9 +6,10 @@ import 'package:travelv2/config/constants.dart';
 import 'package:http/http.dart' as http;
 
 final Dio dio = Dio();
-
 class CommentsRepository {
-  Future<List<Comments>> getCommentsListRepo(int articleID) async {
+
+  //Fetch Article's comments
+Future<List<Comments>> getCommentsListRepo(int articleID) async {
     final String pathUrl =
         "$PROTOCOL://$DOMAIN/getComments?articleID=$articleID";
     var response = await http.get(Uri.parse(pathUrl));
@@ -23,13 +24,13 @@ class CommentsRepository {
     }
   }
 
-  Future postComment(int ArticleID, dynamic UserID, String Content) async {
+  //Post a comment
+  Future postComment(int ArticleID, int UserID, String Content) async {
     final String pathUrl = "$PROTOCOL://$DOMAIN/postComment";
     String articleID = jsonEncode(ArticleID);
     String userID = jsonEncode(UserID);
     String commentContent = jsonEncode(Content);
-    print(Content);
-   
+  
     var response = await dio.post(pathUrl,
         data: {
           'articleID': articleID,
@@ -39,8 +40,6 @@ class CommentsRepository {
         options: Options(headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         }));
-
-    print("The response status code is :" + response.statusCode.toString());
     if (response.statusCode == 200) {
       return response.data;
     } else {

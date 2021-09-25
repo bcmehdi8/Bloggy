@@ -29,8 +29,8 @@ class _commentsPageState extends State<commentsPage> {
   StreamController _streamController = StreamController();
   late CommentsBloc commentsBloc;
   final commentBlocc = CommentsBlocc();
-   ScrollController _scrollController = new ScrollController();
- // late Timer _timer;
+  ScrollController _scrollController = new ScrollController();
+  // late Timer _timer;
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _commentsPageState extends State<commentsPage> {
   @override
   void dispose() {
     commentsBloc.close();
-   // if (_timer.isActive) _timer.cancel();
+    // if (_timer.isActive) _timer.cancel();
     super.dispose();
   }
 
@@ -77,7 +77,8 @@ class _commentsPageState extends State<commentsPage> {
       body: Column(
         children: [
           FutureBuilder(
-            future: _commentsRepository.getCommentsListRepo(widget.data['articleID']),
+            future: _commentsRepository
+                .getCommentsListRepo(widget.data['articleID']),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
                 return CircularProgressIndicator();
@@ -86,12 +87,14 @@ class _commentsPageState extends State<commentsPage> {
               } else if (snapshot.hasData) {
                 return Expanded(
                   child: ListView.builder(
-                    controller: _scrollController,
+                      controller: _scrollController,
                       scrollDirection: Axis.vertical,
                       itemCount: snapshot.data!.length,
                       //shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         var data = snapshot.data![index];
+                        print("Future List Tocuhed");
+                        
                         return commentsList(
                             userImage: data.commenterImage,
                             userName: data.commenterName,
@@ -101,13 +104,16 @@ class _commentsPageState extends State<commentsPage> {
                             replies: data.commentReplies);
                       }),
                 );
-              
               }
               return Text("ERROR while retrieving comment");
             },
           ),
           //Spacer(),
-          ChatInputField(data: widget.data, scrollController: _scrollController,),
+          ChatInputField(
+            data: widget.data,
+            scrollController: _scrollController,
+          ),
+          
         ],
       ),
     );
@@ -216,7 +222,7 @@ class _commentsListState extends State<commentsList> {
                             color: Colors.red,
                           ),
                         ),
-                        Text("Like"),
+                        Text("${widget.likes} Like"),
                         SizedBox(
                           width: 40,
                         ),

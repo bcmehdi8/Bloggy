@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Comments {
   final int commentId;
   final int id;
-    final String? commenterImage;
+  final String? commenterImage;
   final String commenterName;
   final String comment;
   final String commentDate;
