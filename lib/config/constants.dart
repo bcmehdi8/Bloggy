@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 const PROTOCOL = "http";
 const DOMAIN = "10.0.2.2:3000";
 
+//Placeholder
+const String PlaceHolder = "assets/images/infinity-placeholder.gif";
+
 //Colors to use
 const kPrimaryColor = Color(0xFFfe7a42);
 const kTextColor = Color(0xFF3C4046);

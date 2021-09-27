@@ -17,16 +17,18 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+
       theme: ThemeData(
         primarySwatch:
             createMaterialColor.createMaterialColor(Color(0xFF0C9869)),
         primaryColor: kPrimaryColor,
         textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
       ),
       initialRoute: '/',
       onGenerateRoute: RouteGenerator.generateRoute,
-     // home: Home(),
+      // home: Home(),
     );
   }
 }

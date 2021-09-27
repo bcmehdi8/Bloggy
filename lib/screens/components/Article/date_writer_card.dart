@@ -96,8 +96,9 @@ class _WriterCardState extends State<WriterCard> {
     Size size = MediaQuery.of(context).size;
     return Row(children: [
       ClipOval(
-        child: Image.network(
-          widget.image.toString(),
+        child: FadeInImage.assetNetwork(
+          placeholder: PlaceHolder,
+          image: widget.image.toString(),
           height: 50,
           width: 50,
           fit: BoxFit.cover,

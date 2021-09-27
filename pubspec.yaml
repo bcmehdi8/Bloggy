@@ -46,6 +46,9 @@ dependencies:
   comment_box: ^0.0.16
   fluttertoast: ^8.0.8
   web_socket_channel: ^2.1.0
+  font_awesome_flutter: ^9.1.0
+  simple_animations: ^4.0.0
+  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
   flutter_test:

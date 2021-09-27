@@ -14,6 +14,7 @@ import 'package:travelv2/backend/states/category_states.dart';
 import 'package:travelv2/backend/states/comment_states.dart';
 import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/main.dart';
+import 'package:travelv2/screens/login_page.dart';
 import 'package:travelv2/screens/category_page.dart';
 import 'package:travelv2/screens/comments.dart';
 import 'package:travelv2/screens/home.dart';
@@ -26,6 +27,14 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
+        return MaterialPageRoute(
+            // ignore: prefer_const_constructors
+            builder: (_) => Center(
+                  child: LoginPage(),
+                ));
+
+      //  return _errorRoute();
+      case '/home':
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(
                   providers: [

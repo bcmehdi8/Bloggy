@@ -20,9 +20,7 @@ class _ArticleTitleDescriptionState extends State<ArticleTitleDescription> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return IntrinsicHeight(
-      child: Column(
-       
-        children: [
+      child: Column(children: [
         Padding(
             padding: EdgeInsets.only(
           top: kDefaultPadding / 3,
@@ -43,15 +41,17 @@ class _ArticleTitleDescriptionState extends State<ArticleTitleDescription> {
           top: kDefaultPadding * 1.2,
         )),
         Container(
-            // padding: EdgeInsets.symmetric(
-            //   horizontal: kDefaultPadding,
-            // ),
-            height: 250,
-            width: size.width,
-            child: Image.network(
-              widget.data['image'],
-              fit: BoxFit.cover,
-            )),
+          // padding: EdgeInsets.symmetric(
+          //   horizontal: kDefaultPadding,
+          // ),
+          height: 250,
+          width: size.width,
+          child: FadeInImage.assetNetwork(
+            placeholder: PlaceHolder,
+            image: widget.data['image'],
+            fit: BoxFit.cover,
+          ),
+        ),
         Padding(
             padding: EdgeInsets.only(
           top: kDefaultPadding * 1.2,
