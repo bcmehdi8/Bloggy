@@ -47,6 +47,21 @@ exports.findWriter = (req, res) => {
           res.send(data);}
     });
   };
+    // Retrieve Category Posts
+    exports.findCategoryPosts = (req, res) => {
+      article.getCategoryPosts(req.query.categoryID,(err, data) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while retrieving writer."
+          });   
+        else {
+  
+        //  let array = data; 
+        // let object = array.reduce((prev, curr) => ({ ...prev, ...curr }), {}); 
+            res.send(data);}
+      });
+    };
     // Retrieve all writer's popular posts
     exports.findWriterPopularPosts = (req, res) => {
       article.getWriterPopularPosts(req.query.writerID,(err, data) => {

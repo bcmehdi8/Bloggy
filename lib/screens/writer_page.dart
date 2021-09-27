@@ -20,7 +20,7 @@ import 'package:travelv2/screens/components/Writer/latest_posts.dart';
 import 'package:travelv2/screens/components/Writer/writer_picture_badge.dart';
 
 import 'components/Home/title_more_btn.dart';
-import 'components/Writer/writer_posts_carousel.dart';
+import 'components/Writer/popular_posts.dart';
 
 class writerPage extends StatefulWidget {
   final Map writerInfo;
@@ -74,8 +74,9 @@ class _writerPageState extends State<writerPage> {
           children: [
             writerPictureBadge(writerInfo: widget.writerInfo),
             TitleWithNoBtn(title: "Popular Posts", press: () {}),
-            writerbody(),
-             writerLatestPosts(),
+            writerPopularPosts(),
+            TitleWithNoBtn(title: "Latest Posts", press: () {}),
+            writerLatestPosts(),
           ],
         ),
       ),

@@ -14,6 +14,7 @@ import 'package:travelv2/backend/states/category_states.dart';
 import 'package:travelv2/backend/states/comment_states.dart';
 import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/main.dart';
+import 'package:travelv2/screens/category_page.dart';
 import 'package:travelv2/screens/comments.dart';
 import 'package:travelv2/screens/home.dart';
 import 'package:travelv2/screens/article_page.dart';
@@ -48,6 +49,19 @@ class RouteGenerator {
                         WriterBlocc(InitialState(), WriterRepository()),
                     child: articlePage(
                       datax: args,
+                    ),
+                  ));
+        }
+        return _errorRoute();
+      case '/category_page':
+        if (args is Map) {
+          return MaterialPageRoute(
+              // ignore: prefer_const_constructors
+              builder: (_) => BlocProvider<CategoryBloc>(
+                    create: (_) => CategoryBloc(
+                        CategoryInitialState(), CategoryRepository()),
+                    child: categoryPage(
+                      categoryInfo: args,
                     ),
                   ));
         }

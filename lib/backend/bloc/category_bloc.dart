@@ -15,6 +15,7 @@ import 'package:travelv2/config/constants.dart';
 
 class CategoryBloc extends Bloc<CategoryEvents, CategoryState> {
   CategoryRepository _repository;
+  String categoryName = "";
   CategoryBloc(CategoryState initialState, this._repository)
       : super(initialState);
 
@@ -25,6 +26,15 @@ class CategoryBloc extends Bloc<CategoryEvents, CategoryState> {
       try {
         var category = await _repository.getCategoryListRepo();
         yield CategoryFetchSuccessList(category: category);
+      } catch (e) {
+        yield CategoryErrorState(message: e.toString());
+      }
+    } else if (event is FetchCategoryPosts) {
+      yield CategoryLoadingState();
+      try {
+        var articles = await _repository.getCategoryPosts(categoryName);
+        print("done!"+categoryName);
+        yield CategoryPostsFetchSuccess(article: articles);
       } catch (e) {
         yield CategoryErrorState(message: e.toString());
       }

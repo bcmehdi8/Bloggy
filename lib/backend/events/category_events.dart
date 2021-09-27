@@ -7,3 +7,4 @@ class CategoryEvents extends Equatable {
 }
 class FetchCategory extends CategoryEvents {}
 class FetchCategoryList extends CategoryEvents {}
+class FetchCategoryPosts extends CategoryEvents {}

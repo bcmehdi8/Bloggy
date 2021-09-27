@@ -6,10 +6,10 @@ import 'package:travelv2/config/constants.dart';
 import 'package:http/http.dart' as http;
 
 final Dio dio = Dio();
-class CommentsRepository {
 
+class CommentsRepository {
   //Fetch Article's comments
-Future<List<Comments>> getCommentsListRepo(int articleID) async {
+  Future<List<Comments>> getCommentsListRepo(int articleID) async {
     final String pathUrl =
         "$PROTOCOL://$DOMAIN/getComments?articleID=$articleID";
     var response = await http.get(Uri.parse(pathUrl));
@@ -18,6 +18,7 @@ Future<List<Comments>> getCommentsListRepo(int articleID) async {
       List<Comments> comments =
           body.map((dynamic item) => Comments.fromJson(item)).toList();
       print("Comment ADDED!");
+     // print(comments);
       return comments;
     } else {
       throw "comments Not FOUND";
@@ -30,7 +31,7 @@ Future<List<Comments>> getCommentsListRepo(int articleID) async {
     String articleID = jsonEncode(ArticleID);
     String userID = jsonEncode(UserID);
     String commentContent = jsonEncode(Content);
-  
+
     var response = await dio.post(pathUrl,
         data: {
           'articleID': articleID,

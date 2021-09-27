@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:equatable/equatable.dart';
+import 'package:travelv2/backend/model/article_model.dart';
 import 'package:travelv2/backend/model/category_model.dart';
 
 
@@ -21,6 +22,10 @@ class CategoryFetchSuccess extends CategoryState {
 class CategoryFetchSuccessList extends CategoryState {
   List<Category> category;
   CategoryFetchSuccessList({required this.category});
+}
+class CategoryPostsFetchSuccess extends CategoryState {
+  List<Article> article;
+  CategoryPostsFetchSuccess({required this.article});
 }
 
 class CategoryErrorState extends CategoryState {

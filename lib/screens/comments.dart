@@ -80,10 +80,11 @@ class _commentsPageState extends State<commentsPage> {
             future: _commentsRepository
                 .getCommentsListRepo(widget.data['articleID']),
             builder: (context, AsyncSnapshot snapshot) {
+              print(snapshot.hasData);
               if (snapshot.hasError) {
                 return CircularProgressIndicator();
-              } else if (snapshot is CommentsLoadingState) {
-                return CircularProgressIndicator();
+              } else if (snapshot.hasData && snapshot.data.isEmpty) {
+                return nodata(context);
               } else if (snapshot.hasData) {
                 return Expanded(
                   child: ListView.builder(
@@ -93,8 +94,6 @@ class _commentsPageState extends State<commentsPage> {
                       //shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         var data = snapshot.data![index];
-                        print("Future List Tocuhed");
-                        
                         return commentsList(
                             userImage: data.commenterImage,
                             userName: data.commenterName,
@@ -113,7 +112,6 @@ class _commentsPageState extends State<commentsPage> {
             data: widget.data,
             scrollController: _scrollController,
           ),
-          
         ],
       ),
     );
@@ -148,23 +146,12 @@ class _commentsListState extends State<commentsList> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      height: 145,
+      height: size.height * 0.17,
       child: Column(
         // crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // ignore: prefer_const_literals_to_create_immutables
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(
-          //       horizontal: kDefaultPadding, vertical: kDefaultPadding),
-          //   child: Text(
-          //     "Comments(56)",
-          //     style: TextStyle(
-          //         fontFamily: "Open Sans",
-          //         fontSize: 25,
-          //         fontWeight: FontWeight.w800),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: kDefaultPadding,
@@ -240,4 +227,26 @@ class _commentsListState extends State<commentsList> {
       ),
     );
   }
+}
+
+Widget nodata(BuildContext context) {
+  Size size = MediaQuery.of(context).size;
+  return Expanded(
+    //  height: size.height * 0.81,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset(
+          "assets/images/triangle-new.png",
+          scale: 2,
+        ),
+        Text(
+          "Oh, There's no comments \n right now",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 20),
+        ),
+      ],
+    ),
+  );
 }

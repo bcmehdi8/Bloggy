@@ -37,22 +37,32 @@ class _categoriesHolderState extends State<categoriesHolder> {
                     var data = state.category[index];
                     return Padding(
                       padding: const EdgeInsets.only(left: kDefaultPadding),
-                      child: Container(
-                        width: 58,
-                        height: 45,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(data.categoryImage),
-                            ),
-                            SizedBox(
-                              height: 7,
-                            ),
-                            Text(data.categoryName),
-                          ],
+                      child: InkWell(
+                        child: Container(
+                          width: 58,
+                          height: 45,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(data.categoryImage),
+                              ),
+                              SizedBox(
+                                height: 7,
+                              ),
+                              Text(data.categoryName),
+                            ],
+                          ),
                         ),
+                        onTap: () {
+                          Navigator.of(context)
+                              .pushNamed('/category_page', arguments: {
+                                "categoryName" : data.categoryName,
+                                "categoryImage" : data.categoryImage
+                              });
+                        },
                       ),
                     );
                   });

@@ -20,40 +20,46 @@ class _writerLatestPostsState extends State<writerLatestPosts> {
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-    
           Container(
-            child:
-                BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
+            height: null,
+            child: BlocBuilder<ArticleBloc, ArticleState>(
+                builder: (context, state) {
               if (state is ArticleInitialState) {
                 return CircularProgressIndicator();
               } else if (state is ArticleLoadingState) {
                 return CircularProgressIndicator();
               } else if (state is FetchWriterPageData) {
                 return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemCount: state.LatestPosts.length,
                     itemBuilder: (BuildContext context, int index) {
                       var data = state.LatestPosts[index];
-                      return InkWell(
-                        child: latestWriterArticle(
-                          image: data.image,
-                          title: data.title,
-                          date: data.date,
-                          readTime: data.readTime,
+                      return Align(
+                        heightFactor: 1.15,
+                        child: InkWell(
+                          child: latestWriterArticle(
+                            image: data.image,
+                            title: data.title,
+                            date: data.date,
+                            readTime: data.readTime,
+                          ),
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed('/article_page', arguments: {
+                              'id': data.articleID,
+                              'image': data.image,
+                              'title': data.title,
+                              'Description': data.Description,
+                              'readTime': data.readTime,
+                              'date': data.date,
+                              'writerID': data.writerID,
+                            });
+                          },
                         ),
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed('/article_page', arguments: {
-                            'id': data.articleID,
-                            'image': data.image,
-                            'title': data.title,
-                            'Description': data.Description,
-                            'readTime': data.readTime,
-                            'date': data.date,
-                            'writerID': data.writerID,
-                          });
-                        },
                       );
                     });
               } else if (state is ErrorState) {
@@ -73,7 +79,6 @@ class _writerLatestPostsState extends State<writerLatestPosts> {
     );
   }
 }
-
 
 class latestWriterArticle extends StatefulWidget {
   latestWriterArticle(

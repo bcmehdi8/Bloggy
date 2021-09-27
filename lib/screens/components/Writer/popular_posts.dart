@@ -8,14 +8,14 @@ import 'package:travelv2/backend/states/article_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/screens/components/Writer/latest_posts.dart';
 
-class writerbody extends StatefulWidget {
-  const writerbody({Key? key}) : super(key: key);
+class writerPopularPosts extends StatefulWidget {
+  const writerPopularPosts({Key? key}) : super(key: key);
 
   @override
-  _writerbodyState createState() => _writerbodyState();
+  _writerPopularPostsState createState() => _writerPopularPostsState();
 }
 
-class _writerbodyState extends State<writerbody> {
+class _writerPopularPostsState extends State<writerPopularPosts> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,8 +24,9 @@ class _writerbodyState extends State<writerbody> {
         children: [
           Container(
             height: size.height * 0.35,
-            child:
-                BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
+            padding: EdgeInsets.only(bottom: 10),
+            child: BlocBuilder<ArticleBloc, ArticleState>(
+                builder: (context, state) {
               if (state is ArticleInitialState) {
                 return CircularProgressIndicator();
               } else if (state is ArticleLoadingState) {
@@ -69,7 +70,6 @@ class _writerbodyState extends State<writerbody> {
               ));
             }),
           ),
-        
         ],
       ),
     );
@@ -111,7 +111,7 @@ class _writer_posts_carouselState extends State<writer_posts_carousel> {
                 color: Colors.grey.withOpacity(0.4),
                 spreadRadius: 5,
                 blurRadius: 5,
-                offset: Offset(0, 15), // changes position of shadow
+                offset: Offset(0, 5), // changes position of shadow
               ),
             ],
           ),
@@ -121,7 +121,7 @@ class _writer_posts_carouselState extends State<writer_posts_carousel> {
                   height: size.height,
                   width: size.width,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(25),
                     image: DecorationImage(
                       image: NetworkImage(
                         "${widget.image}",
@@ -137,7 +137,7 @@ class _writer_posts_carouselState extends State<writer_posts_carousel> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(26),
+                      borderRadius: BorderRadius.circular(25),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -171,75 +171,6 @@ class _writer_posts_carouselState extends State<writer_posts_carousel> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class latestWriterArticle extends StatefulWidget {
-  latestWriterArticle(
-      {Key? key,
-      required this.image,
-      required this.title,
-      required this.date,
-      required this.readTime})
-      : super(key: key);
-  String image, title, date;
-  int readTime;
-
-  @override
-  _latestWriterArticleState createState() => _latestWriterArticleState();
-}
-
-class _latestWriterArticleState extends State<latestWriterArticle> {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height * 0.115,
-      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      child: Row(
-        children: [
-          Container(
-              width: size.width * 0.24,
-              height: size.height * 0.95,
-              decoration: BoxDecoration(),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.network(widget.image, fit: BoxFit.cover))),
-          Container(
-            padding: const EdgeInsets.all(6.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: size.width * 0.6,
-                  child: Text(
-                    widget.title,
-                    softWrap: true,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 21,
-                      fontFamily: 'Nunito Sans',
-                      height: 1.3,
-                    ),
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  widget.readTime.toString() + " Mins Read | " + widget.date,
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
     );
   }
 }
