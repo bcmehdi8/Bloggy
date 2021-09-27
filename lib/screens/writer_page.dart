@@ -16,6 +16,7 @@ import 'package:travelv2/backend/repo/writer_repo.dart';
 import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/screens/components/Home/title_no_btn.dart';
+import 'package:travelv2/screens/components/Writer/latest_posts.dart';
 import 'package:travelv2/screens/components/Writer/writer_picture_badge.dart';
 
 import 'components/Home/title_more_btn.dart';
@@ -35,12 +36,12 @@ class _writerPageState extends State<writerPage> {
 
   @override
   void initState() {
-    // bloc.writerIdController = 1;
     bloc = BlocProvider.of<WriterBlocc>(context);
     articlebloc = BlocProvider.of<ArticleBloc>(context);
     articlebloc.writerID = widget.writerInfo['id'];
     bloc.writerIdController = widget.writerInfo['id'];
     bloc.add(getWriterCard());
+    articlebloc.add(FetchLatestWriterArticles());
     articlebloc.add(FetchPopularWriterArticles());
     super.initState();
   }
@@ -69,10 +70,12 @@ class _writerPageState extends State<writerPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             writerPictureBadge(writerInfo: widget.writerInfo),
             TitleWithNoBtn(title: "Popular Posts", press: () {}),
             writerbody(),
+             writerLatestPosts(),
           ],
         ),
       ),

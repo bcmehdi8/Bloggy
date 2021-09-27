@@ -59,6 +59,18 @@ exports.findWriter = (req, res) => {
             res.send(data);}
       });
     };
+        // Retrieve all writer's Latest posts
+        exports.findWriterLatestPosts = (req, res) => {
+          article.getWriterLatestPosts(req.query.writerID,(err, data) => {
+            if (err)
+              res.status(500).send({
+                message:
+                  err.message || "Some error occurred while retrieving writer."
+              });   
+            else {
+                res.send(data);}
+          });
+        };
         // Retrieve all comments
         exports.findComments = (req, res) => {
           article.getComments(req.query.articleID,(err, data) => {

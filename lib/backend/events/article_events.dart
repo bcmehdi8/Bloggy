@@ -8,3 +8,4 @@ class ArticleEvents extends Equatable {
 class FetchArticle extends ArticleEvents {}
 class FetchArticleList extends ArticleEvents {}
 class FetchPopularWriterArticles extends ArticleEvents {}
+class FetchLatestWriterArticles extends ArticleEvents {}

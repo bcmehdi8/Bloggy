@@ -28,13 +28,17 @@ class ArticleBloc extends Bloc<ArticleEvents, ArticleState> {
       } catch (e) {
         yield ErrorState(message: e.toString());
       }
+
     } else if (event is FetchPopularWriterArticles) {
       try {
-        var article = await _repository.getWriterPopularPosts(writerID);
-        yield FetchSuccessList(article: article);
+        var PopularArticles = await _repository.getWriterPopularPosts(writerID);
+        var LatestArticles = await _repository.getWriterLatestPosts(writerID);
+        yield FetchWriterPageData(PopularPosts: PopularArticles, LatestPosts: LatestArticles);
       } catch (e) {
         yield ErrorState(message: e.toString());
       }
     }
+
+   
   }
 }

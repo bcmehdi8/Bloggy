@@ -19,6 +19,11 @@ class FetchSuccessList extends ArticleState {
   List<Article> article;
   FetchSuccessList({required this.article});
 }
+class FetchWriterPageData extends ArticleState {
+  List<Article> PopularPosts;
+  List<Article> LatestPosts;
+  FetchWriterPageData({required this.PopularPosts,required this.LatestPosts});
+}
 
 class ErrorState extends ArticleState {
   String message;

@@ -31,4 +31,17 @@ class ArticleRepository {
       throw "NOOOOOO";
     }
   }
+    Future<List<Article>> getWriterLatestPosts(int writerID) async {
+    final String pathUrl = "$PROTOCOL://$DOMAIN/getWriterLatestPosts?writerID=$writerID";
+    var response = await http.get(Uri.parse(pathUrl));
+    if (response.statusCode == 200) {
+      List<dynamic> body = jsonDecode(response.body);
+      List<Article> articles =
+          body.map((dynamic item) => Article.fromJson(item)).toList();
+
+      return articles;
+    } else {
+      throw "NOOOOOO";
+    }
+  }
 }
