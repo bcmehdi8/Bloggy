@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travelv2/config/routes.dart';
-import 'screens/home.dart';
+import 'screens/home_page.dart';
 import 'config/constants.dart';
 
 void main() {

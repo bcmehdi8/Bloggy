@@ -125,6 +125,18 @@ flutter:
         - asset: assets/fonts/NunitoSans/NunitoSans-ExtraBold.ttf
           weight: 800
           style: italic
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Inter/Inter-Light.otf
+          weight: 300  
+        - asset: assets/fonts/Inter/Inter-SemiBold.otf
+          weight: 600               
+        - asset: assets/fonts/Inter/Inter-Bold.otf
+          weight: 700     
+        - asset: assets/fonts/Inter/Inter-Black.otf
+          weight: 900  
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

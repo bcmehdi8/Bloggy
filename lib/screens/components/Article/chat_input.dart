@@ -10,7 +10,7 @@ import 'package:travelv2/backend/bloc/comment_bloc.dart';
 import 'package:travelv2/backend/events/comment_events.dart';
 import 'package:travelv2/backend/states/comment_states.dart';
 import 'package:travelv2/config/constants.dart';
-import 'package:travelv2/screens/comments.dart';
+import 'package:travelv2/screens/comments_page.dart';
 
 class ChatInputField extends StatefulWidget {
   final Map data;

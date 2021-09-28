@@ -6,7 +6,7 @@ import 'package:travelv2/backend/states/article_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/backend/bloc/article_bloc.dart';
 import 'package:travelv2/backend/model/article_model.dart';
-import 'package:travelv2/screens/home.dart';
+import 'package:travelv2/screens/home_page.dart';
 
 class recentNews extends StatefulWidget {
   const recentNews({Key? key}) : super(key: key);

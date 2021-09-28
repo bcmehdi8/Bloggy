@@ -10,7 +10,7 @@ import 'package:travelv2/backend/bloc/writer_bloc.dart';
 import 'package:travelv2/backend/events/article_events.dart';
 import 'package:travelv2/backend/events/writer_events.dart';
 import 'package:travelv2/config/constants.dart';
-import 'package:travelv2/screens/comments.dart';
+import 'package:travelv2/screens/comments_page.dart';
 import 'components/Article/article_title_description.dart';
 import 'components/Article/date_writer_card.dart';
 class articlePage extends StatefulWidget {

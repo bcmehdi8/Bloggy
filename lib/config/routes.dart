@@ -16,8 +16,8 @@ import 'package:travelv2/backend/states/writer_states.dart';
 import 'package:travelv2/main.dart';
 import 'package:travelv2/screens/login_page.dart';
 import 'package:travelv2/screens/category_page.dart';
-import 'package:travelv2/screens/comments.dart';
-import 'package:travelv2/screens/home.dart';
+import 'package:travelv2/screens/comments_page.dart';
+import 'package:travelv2/screens/home_page.dart';
 import 'package:travelv2/screens/article_page.dart';
 import 'package:travelv2/screens/writer_page.dart';
 
