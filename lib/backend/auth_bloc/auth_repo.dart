@@ -36,8 +36,9 @@ class UserRepository {
     // return response.data["token"];
     return response.data;
   }
-    Future<String> Singup(String email, String password) async {
-    Response response = await _dio.post(loginUrl, data: {
+    Future<String> Singup(String username,String email, String password) async {
+    Response response = await _dio.post(signupUrl, data: {
+      "username": username,
       "email": email,
       "password": password,
     });

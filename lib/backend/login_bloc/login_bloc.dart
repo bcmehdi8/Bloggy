@@ -9,13 +9,9 @@ import 'package:travelv2/backend/login_bloc/login_event.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
- // final AuthenticationBloc authenticationBloc;
+  // final AuthenticationBloc authenticationBloc;
 
-  LoginBloc({
-    required LoginInitial loginInitial,
-    required this.userRepository,
-  })  : super(loginInitial);
-
+  LoginBloc(LoginState loginInitial, this.userRepository) : super(loginInitial);
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -27,7 +23,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           event.email,
           event.password,
         );
-      //  authenticationBloc.add(LoggedIn(token: token));
+        //  authenticationBloc.add(LoggedIn(token: token));
         yield LoginInitial();
       } catch (error) {
         yield LoginFailure(error: error.toString());
