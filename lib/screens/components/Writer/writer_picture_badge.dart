@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelv2/backend/bloc/writer_bloc.dart';
-import 'package:travelv2/backend/states/writer_states.dart';
+import 'package:travelv2/backend/writer_bloc/writer_bloc.dart';
+import 'package:travelv2/backend/writer_bloc/writer_states.dart';
 import 'package:travelv2/config/constants.dart';
 
 class writerPictureBadge extends StatefulWidget {

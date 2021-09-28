@@ -1,10 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelv2/backend/bloc/category_bloc.dart';
-import 'package:travelv2/backend/events/category_events.dart';
+import 'package:travelv2/backend/category_bloc/category_bloc.dart';
+import 'package:travelv2/backend/category_bloc/category_events.dart';
 import 'package:travelv2/backend/model/category_model.dart';
-import 'package:travelv2/backend/states/category_states.dart';
+import 'package:travelv2/backend/category_bloc/category_states.dart';
 
 import 'components/Home/recent_news.dart';
 

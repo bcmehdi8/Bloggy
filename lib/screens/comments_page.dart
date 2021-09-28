@@ -6,11 +6,11 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:travelv2/backend/bloc/comment_bloc.dart';
-import 'package:travelv2/backend/events/comment_events.dart';
+import 'package:travelv2/backend/comment_bloc/comment_bloc.dart';
+import 'package:travelv2/backend/comment_bloc/comment_events.dart';
 import 'package:travelv2/backend/model/comments_model.dart';
-import 'package:travelv2/backend/repo/comment_repo.dart';
-import 'package:travelv2/backend/states/comment_states.dart';
+import 'package:travelv2/backend/comment_bloc/comment_repo.dart';
+import 'package:travelv2/backend/comment_bloc/comment_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:comment_box/comment/comment.dart';
 

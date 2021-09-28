@@ -1,5 +1,6 @@
 const express = require('express');
 const articles = require("./controllers/article.controller"); 
+const user = require("./controllers/user.controller"); 
 
 
 const app = express();
@@ -8,6 +9,10 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+//Register User
+app.post('/auth/createUser', user.newUser)
+//Login Checker
+app.get('/auth/login', user.checkUser)
 //Find All Articles
 app.get('/getUser', articles.findAll)
 //Get a Specific Writer

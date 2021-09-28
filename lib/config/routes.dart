@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelv2/backend/bloc/article_bloc.dart';
-import 'package:travelv2/backend/bloc/category_bloc.dart';
-import 'package:travelv2/backend/bloc/comment_bloc.dart';
-import 'package:travelv2/backend/bloc/writer_bloc.dart';
-import 'package:travelv2/backend/events/writer_events.dart';
-import 'package:travelv2/backend/repo/article_repo.dart';
-import 'package:travelv2/backend/repo/category_repo.dart';
-import 'package:travelv2/backend/repo/comment_repo.dart';
-import 'package:travelv2/backend/repo/writer_repo.dart';
-import 'package:travelv2/backend/states/article_states.dart';
-import 'package:travelv2/backend/states/category_states.dart';
-import 'package:travelv2/backend/states/comment_states.dart';
-import 'package:travelv2/backend/states/writer_states.dart';
+import 'package:travelv2/backend/article_bloc/article_bloc.dart';
+import 'package:travelv2/backend/category_bloc/category_bloc.dart';
+import 'package:travelv2/backend/comment_bloc/comment_bloc.dart';
+import 'package:travelv2/backend/writer_bloc/writer_bloc.dart';
+import 'package:travelv2/backend/writer_bloc/writer_events.dart';
+import 'package:travelv2/backend/article_bloc/article_repo.dart';
+import 'package:travelv2/backend/category_bloc/category_repo.dart';
+import 'package:travelv2/backend/comment_bloc/comment_repo.dart';
+import 'package:travelv2/backend/writer_bloc/writer_repo.dart';
+import 'package:travelv2/backend/article_bloc/article_states.dart';
+import 'package:travelv2/backend/category_bloc/category_states.dart';
+import 'package:travelv2/backend/comment_bloc/comment_states.dart';
+import 'package:travelv2/backend/writer_bloc/writer_states.dart';
 import 'package:travelv2/main.dart';
 import 'package:travelv2/screens/login_page.dart';
 import 'package:travelv2/screens/category_page.dart';
 import 'package:travelv2/screens/comments_page.dart';
 import 'package:travelv2/screens/home_page.dart';
 import 'package:travelv2/screens/article_page.dart';
+import 'package:travelv2/screens/signup_page.dart';
 import 'package:travelv2/screens/writer_page.dart';
 
 class RouteGenerator {
@@ -31,6 +32,12 @@ class RouteGenerator {
             // ignore: prefer_const_constructors
             builder: (_) => Center(
                   child: LoginPage(),
+                ));
+      case '/signup_page':
+        return MaterialPageRoute(
+            // ignore: prefer_const_constructors
+            builder: (_) => Center(
+                  child: SignupPage(),
                 ));
 
       //  return _errorRoute();

@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:travelv2/backend/bloc/comment_bloc.dart';
-import 'package:travelv2/backend/events/comment_events.dart';
-import 'package:travelv2/backend/states/comment_states.dart';
+import 'package:travelv2/backend/comment_bloc/comment_bloc.dart';
+import 'package:travelv2/backend/comment_bloc/comment_events.dart';
+import 'package:travelv2/backend/comment_bloc/comment_states.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/screens/comments_page.dart';
 

@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
   flutter_svg: ^0.22.0
-  flutter_bloc: ^7.2.0
+  flutter_bloc: ^7.3.0
   http: ^0.13.3
   equatable: ^2.0.3
   flutter_icons: ^1.1.0
@@ -49,6 +49,7 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   simple_animations: ^4.0.0
   flutter_signin_button: ^2.0.0
+  flutter_secure_storage: ^4.2.1
 
 dev_dependencies:
   flutter_test:

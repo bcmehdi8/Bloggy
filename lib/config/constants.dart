@@ -8,7 +8,7 @@ const DOMAIN = "10.0.2.2:3000";
 const String PlaceHolder = "assets/images/infinity-placeholder.gif";
 
 //Colors to use
-const kPrimaryColor = Color(0xFFfe7a42);
+const kPrimaryColor = Color(0xFFFFB900);
 const kTextColor = Color(0xFF3C4046);
 const kBackgroundColor = Color(0xFFF9F8FD);
 const double kDefaultPadding = 20.0;

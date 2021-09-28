@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelv2/backend/states/article_states.dart';
+import 'package:travelv2/backend/article_bloc/article_states.dart';
 import 'package:travelv2/config/constants.dart';
-import 'package:travelv2/backend/bloc/article_bloc.dart';
+import 'package:travelv2/backend/article_bloc/article_bloc.dart';
 import 'package:travelv2/backend/model/article_model.dart';
 import 'package:travelv2/screens/home_page.dart';
 

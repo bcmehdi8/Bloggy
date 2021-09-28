@@ -4,10 +4,10 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:travelv2/backend/bloc/article_bloc.dart';
-import 'package:travelv2/backend/bloc/category_bloc.dart';
-import 'package:travelv2/backend/events/article_events.dart';
-import 'package:travelv2/backend/events/category_events.dart';
+import 'package:travelv2/backend/article_bloc/article_bloc.dart';
+import 'package:travelv2/backend/category_bloc/category_bloc.dart';
+import 'package:travelv2/backend/article_bloc/article_events.dart';
+import 'package:travelv2/backend/category_bloc/category_events.dart';
 import 'dart:math' as math;
 
 import 'components/Home/body.dart'; // import this
