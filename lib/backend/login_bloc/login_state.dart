@@ -26,3 +26,6 @@ class LoginFailure extends LoginState {
   @override
   String toString() => 'LoginFailure { error: $error }';
 }
+//Sign up
+
+class RegisterSuccess extends LoginState {}

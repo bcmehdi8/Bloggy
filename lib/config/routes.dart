@@ -33,7 +33,8 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(
             // ignore: prefer_const_constructors
-            builder: (_) => Center(
+            builder: (_) => BlocProvider<LoginBloc>(
+                  create: (_) => LoginBloc(LoginInitial(), UserRepository()),
                   child: LoginPage(),
                 ));
       case '/signup_page':

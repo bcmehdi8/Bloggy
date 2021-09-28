@@ -9,7 +9,7 @@ import 'package:travelv2/backend/login_bloc/login_event.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
-  // final AuthenticationBloc authenticationBloc;
+  late AuthenticationBloc authenticationBloc;
 
   LoginBloc(LoginState loginInitial, this.userRepository) : super(loginInitial);
 
@@ -23,8 +23,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           event.email,
           event.password,
         );
-        //  authenticationBloc.add(LoggedIn(token: token));
-        yield LoginInitial();
+        print("Login DONE");
+         yield LoginSuccess();
+         authenticationBloc.add(LoggedIn(token: token));
+       
+      } catch (error) {
+        yield LoginFailure(error: error.toString());
+      }
+    }
+    if (event is RegisterButtonPressed) {
+      yield LoginLoading();
+
+      try {
+        final token = await userRepository.Singup(
+          event.username,
+          event.email,
+          event.password,
+        );
+        print("Register DONE");
+        yield RegisterSuccess();
+        authenticationBloc.add(LoggedIn(token: token));
       } catch (error) {
         yield LoginFailure(error: error.toString());
       }

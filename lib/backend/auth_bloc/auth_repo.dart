@@ -33,8 +33,8 @@ class UserRepository {
       "email": email,
       "password": password,
     });
-    // return response.data["token"];
-    return response.data;
+     return response.data["token"];
+   // return response.data;
   }
     Future<String> Singup(String username,String email, String password) async {
     Response response = await _dio.post(signupUrl, data: {
@@ -42,7 +42,7 @@ class UserRepository {
       "email": email,
       "password": password,
     });
-    // return response.data["token"];
-    return response.data;
+     return response.data["token"];
+    //return response.data;
   }
 }
