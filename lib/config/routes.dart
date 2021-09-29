@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelv2/backend/article_bloc/article_bloc.dart';
+import 'package:travelv2/backend/auth_bloc/auth_bloc.dart';
 import 'package:travelv2/backend/auth_bloc/auth_repo.dart';
+import 'package:travelv2/backend/auth_bloc/auth_state.dart';
 import 'package:travelv2/backend/category_bloc/category_bloc.dart';
 import 'package:travelv2/backend/comment_bloc/comment_bloc.dart';
 import 'package:travelv2/backend/login_bloc/login_bloc.dart';
@@ -34,8 +36,8 @@ class RouteGenerator {
         case '/':
         return MaterialPageRoute(
             // ignore: prefer_const_constructors
-            builder: (_) => BlocProvider<LoginBloc>(
-                  create: (_) => LoginBloc(LoginInitial(), UserRepository()),
+            builder: (_) => BlocProvider<AuthenticationBloc>(
+                  create: (_) => AuthenticationBloc(AuthenticationUninitialized(), UserRepository()),
                   child: splashScreen(),
                 ));
       case '/login_page':

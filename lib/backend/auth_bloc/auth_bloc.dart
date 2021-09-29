@@ -8,12 +8,11 @@ import 'package:travelv2/backend/auth_bloc/auth_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository userRepository;
+  late AuthenticationBloc authenticationBloc;
 
-  AuthenticationBloc(
-      {required AuthenticationState authenticationUninitialized,
-      required this.userRepository})
-      : assert(userRepository != null),
-        super(authenticationUninitialized);
+  AuthenticationBloc(AuthenticationState initialState, this.userRepository) : super(initialState);
+
+
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
