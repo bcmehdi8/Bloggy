@@ -72,7 +72,7 @@ AppBar appBarHolder(BuildContext context) {
             await userRepository.deleteToken();
             Navigator.of(context).pushReplacementNamed('/login_page', arguments: {});
           } else {
-            print(" couldn't logout right now");
+            print("couldn't logout right now");
           }
         },
       ),
