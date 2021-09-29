@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:travelv2/backend/auth_bloc/auth_repo.dart';
 import 'package:travelv2/config/constants.dart';
 
 class HeaderTextSearchBox extends StatefulWidget {
@@ -12,6 +13,14 @@ class HeaderTextSearchBox extends StatefulWidget {
 }
 
 class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
+   UserRepository userRepository = new UserRepository();
+
+  @override
+  void initState() {
+    userRepository.getToken();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

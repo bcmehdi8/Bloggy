@@ -39,7 +39,8 @@ class _SignupPageState extends State<SignupPage> {
   void _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    final result = await Navigator.of(context).pushNamed('/home', arguments: {});
+    final result =
+        await Navigator.of(context).pushNamed('/home', arguments: {});
   }
 
   @override
@@ -179,7 +180,7 @@ class _SignupPageState extends State<SignupPage> {
                                 ),
                               ),
                               //sign in Text
-                             SigninQuestion(context),
+                              SigninQuestion(context),
                             ],
                           ),
                         ),

@@ -1,7 +1,7 @@
 const article = require("../logic/article.model");
 
 
-// Retrieve all Customers from the database.
+// Retrieve all Articles from the database.
 exports.findAll = (req, res) => {
     article.getAll((err, data) => {
       if (err)

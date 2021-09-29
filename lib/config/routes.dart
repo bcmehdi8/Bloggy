@@ -23,6 +23,7 @@ import 'package:travelv2/screens/comments_page.dart';
 import 'package:travelv2/screens/home_page.dart';
 import 'package:travelv2/screens/article_page.dart';
 import 'package:travelv2/screens/signup_page.dart';
+import 'package:travelv2/screens/splash_screen.dart';
 import 'package:travelv2/screens/writer_page.dart';
 
 class RouteGenerator {
@@ -30,7 +31,14 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/':
+        case '/':
+        return MaterialPageRoute(
+            // ignore: prefer_const_constructors
+            builder: (_) => BlocProvider<LoginBloc>(
+                  create: (_) => LoginBloc(LoginInitial(), UserRepository()),
+                  child: splashScreen(),
+                ));
+      case '/login_page':
         return MaterialPageRoute(
             // ignore: prefer_const_constructors
             builder: (_) => BlocProvider<LoginBloc>(

@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }))
 //Register User
 app.post('/auth/createUser', user.newUser)
 //Login Checker
-app.get('/auth/login', user.checkUser)
+app.post('/auth/login', user.checkUser)
 //Find All Articles
 app.get('/getUser', articles.findAll)
 //Get a Specific Writer

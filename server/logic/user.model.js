@@ -14,24 +14,30 @@ const User = function(user) {
 
 
 //Login Proccess
-User.findUser = (email,password, result) => {
-    console.log(userEmail+ " attempted login");
+User.findUser = (email,password,res,result) => {
+    console.log(email+ " attempted login");
     var passwordCrypted = crypto.createHash('sha256').update(password).digest('hex');
-    sql.query("SELECT * FROM users WHERE userEmail='"+email+"' AND userPassword='"+passwordCrypted+"'", (err, res) => {
- 
+    sql.query("SELECT * FROM users WHERE userEmail='"+email+"' AND userPassword='"+passwordCrypted+"'", (err, row) => {
+      if(row != undefined ) {
+        var payload = {
+          userEmail: email,
+        };
 
-      var token = jwt.sign(payload, KEY, {algorithm: 'HS256', expiresIn: "15d"});
-      console.log("Success");
-      res.send(token);
+  var token = jwt.sign(payload, KEY, {algorithm: 'HS256', expiresIn: "15d"});
+
+  console.log("Token Success");
+ // res.send(token);
+
+      }
 
       if (err) {
         console.log("error: ", err);
-        result(err, null);
+        res(err, null);
         return;
       }
   
-      console.log("created comment ");
-      result(null, { result});
+      console.log(email+" LoggedIn ");
+      res(null, {email,token});
     });
   };
 

@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         body: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
+              print("hi");
               return _navigateAndDisplaySelection(context);
             }
           },
@@ -148,6 +149,12 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
+                              // submitButton(
+                              //     context,
+                              //     "Login Now",
+                              //     authBloc.add(LoginButtonPressed(
+                              //         email: _userEmailController.text,
+                              //         password: _userPasswordController.text))),
                               //forget password
                               ForgetPassword(),
                               //         Fb and google icons

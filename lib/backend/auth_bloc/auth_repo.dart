@@ -23,6 +23,12 @@ class UserRepository {
     await storage.write(key: 'token', value: token);
   }
 
+  Future<String> getToken() async {
+    var value = await storage.read(key: 'token');
+    print(value);
+    return value.toString();
+  }
+
   Future<void> deleteToken() async {
     storage.delete(key: 'token');
     storage.deleteAll();
@@ -33,16 +39,17 @@ class UserRepository {
       "email": email,
       "password": password,
     });
-     return response.data["token"];
-   // return response.data;
+    return response.data["token"];
+    // return response.data;
   }
-    Future<String> Singup(String username,String email, String password) async {
+
+  Future<String> Singup(String username, String email, String password) async {
     Response response = await _dio.post(signupUrl, data: {
       "username": username,
       "email": email,
       "password": password,
     });
-     return response.data["token"];
+    return response.data["token"];
     //return response.data;
   }
 }
