@@ -15,8 +15,8 @@ import 'package:travelv2/screens/components/Login/text_field.dart';
 
 import 'components/Login/bottom_question.dart';
 import 'components/Login/fb_google_icons.dart';
-import 'components/Login/forget_password.dart';
 import 'components/Login/top_message_ui.dart';
+import 'components/Login/forget_password.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
