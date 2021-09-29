@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:travelv2/backend/article_bloc/article_bloc.dart';
+import 'package:travelv2/backend/auth_bloc/auth_repo.dart';
 import 'package:travelv2/backend/category_bloc/category_bloc.dart';
 import 'package:travelv2/backend/article_bloc/article_events.dart';
 import 'package:travelv2/backend/category_bloc/category_events.dart';
@@ -22,6 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late ArticleBloc bloc;
   late CategoryBloc categoryBloc;
+
   @override
   void initState() {
     bloc = BlocProvider.of<ArticleBloc>(context);
@@ -40,13 +42,14 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarHolder(),
+      appBar: appBarHolder(context),
       body: Body(),
     );
   }
 }
 
-AppBar appBarHolder() {
+AppBar appBarHolder(BuildContext context) {
+  final UserRepository userRepository = new UserRepository();
   return AppBar(
     backgroundColor: Colors.transparent,
     title: Text(
@@ -60,10 +63,18 @@ AppBar appBarHolder() {
     actions: [
       IconButton(
         icon: Icon(
-          EvaIcons.menu2,
+          EvaIcons.logOutOutline,
           color: Colors.black,
         ),
-        onPressed: () {},
+        onPressed: () async{
+          final bool hasToken = await userRepository.hasToken();
+          if (hasToken) {
+            await userRepository.deleteToken();
+            Navigator.of(context).pushReplacementNamed('/login_page', arguments: {});
+          } else {
+            print("couldn't logout right now");
+          }
+        },
       ),
     ],
   );

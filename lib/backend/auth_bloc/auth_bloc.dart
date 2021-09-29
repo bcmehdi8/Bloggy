@@ -10,9 +10,8 @@ class AuthenticationBloc
   final UserRepository userRepository;
   late AuthenticationBloc authenticationBloc;
 
-  AuthenticationBloc(AuthenticationState initialState, this.userRepository) : super(initialState);
-
-
+  AuthenticationBloc(AuthenticationState initialState, this.userRepository)
+      : super(initialState);
 
   @override
   AuthenticationState get initialState => AuthenticationUninitialized();
@@ -22,10 +21,13 @@ class AuthenticationBloc
     AuthenticationEvent event,
   ) async* {
     if (event is appStarted) {
+      print("appStarted");
       final bool hasToken = await userRepository.hasToken();
-      if (hasToken) {
+      if (hasToken == true) {
+        print("hasToken == true");
         yield AuthenticationAuthenticated();
       } else {
+        print("hasToken == false");
         yield AuthenticationUnauthenticated();
       }
     }

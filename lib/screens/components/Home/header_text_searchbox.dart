@@ -17,7 +17,6 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
 
   @override
   void initState() {
-    userRepository.getToken();
     super.initState();
   }
 

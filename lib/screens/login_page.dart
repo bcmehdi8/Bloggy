@@ -68,7 +68,6 @@ class _LoginPageState extends State<LoginPage> {
         body: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              print("hi");
               return _navigateAndDisplaySelection(context);
             }
           },

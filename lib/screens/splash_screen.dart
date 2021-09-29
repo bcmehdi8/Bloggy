@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelv2/backend/auth_bloc/auth_bloc.dart';
+import 'package:travelv2/backend/auth_bloc/auth_event.dart';
 import 'package:travelv2/backend/auth_bloc/auth_repo.dart';
 import 'package:travelv2/backend/auth_bloc/auth_state.dart';
 import 'package:travelv2/backend/login_bloc/login_bloc.dart';
@@ -25,12 +26,13 @@ class _splashScreenState extends State<splashScreen> {
   @override
   void initState() {
     authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    authenticationBloc.add(appStarted());
     super.initState();
   }
 
-  void _navigateAndDisplaySelection(BuildContext context, String router) async {
+  void _navigateAndDisplaySelection(BuildContext context, String screen) async {
     final result =
-        await Navigator.of(context).pushNamed('/$router', arguments: {});
+        await Navigator.of(context).pushReplacementNamed('/$screen', arguments: {});
   }
 
   @override
@@ -40,12 +42,12 @@ class _splashScreenState extends State<splashScreen> {
       body: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           if (state is AuthenticationAuthenticated) {
-            print("Authenticated");
-            return _navigateAndDisplaySelection(context, "home");
+             return _navigateAndDisplaySelection(context,"home");
+         //   return print("Authenticated");
           }
           if (state is AuthenticationUnauthenticated) {
-            print("Unauthenticated");
             return _navigateAndDisplaySelection(context, "login_page");
+          //  return print("Unauthenticated");
           }
         },
         child: Container(
@@ -58,6 +60,19 @@ class _splashScreenState extends State<splashScreen> {
           )),
         ),
       ),
+      // body: BlocListener<AuthenticationBloc, AuthenticationState>(
+      //   listener: (context, state) {
+      //     if (state is AuthenticationAuthenticated) {
+      //       print("Authenticated");
+      //       return _navigateAndDisplaySelection(context);
+      //     }
+      //     if (state is AuthenticationUnauthenticated) {
+      //       print("Unauthenticated");
+      //       return _navigateAndDisplaySelection(context);
+      //     }
+
+      //   },
+      // ),
     );
   }
 }

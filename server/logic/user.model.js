@@ -16,10 +16,12 @@ const User = function(user) {
 //Login Proccess
 User.findUser = (email,password,res,result) => {
     console.log(email+ " attempted login");
+    var username;
     var passwordCrypted = crypto.createHash('sha256').update(password).digest('hex');
     sql.query("SELECT * FROM users WHERE userEmail='"+email+"' AND userPassword='"+passwordCrypted+"'", (err, row) => {
       if(row != undefined ) {
         var payload = {
+          userName: username,
           userEmail: email,
         };
 
@@ -27,16 +29,13 @@ User.findUser = (email,password,res,result) => {
 
   console.log("Token Success");
  // res.send(token);
-
       }
-
       if (err) {
         console.log("error: ", err);
         res(err, null);
         return;
       }
-  
-      console.log(email+" LoggedIn ");
+      console.log("username : "+userName+", email : "+email+" LoggedIn With following Token : "+token);
       res(null, {email,token});
     });
   };

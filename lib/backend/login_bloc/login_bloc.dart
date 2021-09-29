@@ -15,6 +15,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
+    //Login Event
     if (event is LoginButtonPressed) {
       yield LoginLoading();
       print("Login event is started");
@@ -30,9 +31,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginFailure(error: error.toString());
       }
     }
+
+    //Register Event
     if (event is RegisterButtonPressed) {
       yield LoginLoading();
-   print("Register event is started");
+      print("Register event is started");
       try {
         final token = await userRepository.Singup(
           event.username,

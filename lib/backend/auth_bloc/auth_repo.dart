@@ -7,31 +7,29 @@ class UserRepository {
   var loginUrl = '$PROTOCOL://$DOMAIN/auth/login';
   var signupUrl = '$PROTOCOL://$DOMAIN/auth/createUser';
 
-  final FlutterSecureStorage storage = new FlutterSecureStorage();
+  final storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
 
   Future<bool> hasToken() async {
     var value = await storage.read(key: 'token');
     if (value != null) {
+      print("hasToken() Function is TRUE and it's value is : " + value);
       return true;
     } else {
+      print("hasToken() Function is FALSE");
       return false;
     }
   }
 
   Future<void> persistToken(String token) async {
     await storage.write(key: 'token', value: token);
-  }
-
-  Future<String> getToken() async {
-    var value = await storage.read(key: 'token');
-    print(value);
-    return value.toString();
+    print("persistToken Function in proccess");
   }
 
   Future<void> deleteToken() async {
     storage.delete(key: 'token');
     storage.deleteAll();
+    print("Token Deleted");
   }
 
   Future<String> login(String email, String password) async {
@@ -39,6 +37,9 @@ class UserRepository {
       "email": email,
       "password": password,
     });
+    await storage.write(key: 'token', value: response.data["token"]);
+    await storage.write(key: 'username', value: response.data["username"]);
+    await storage.write(key: 'email', value: response.data["email"]);
     return response.data["token"];
     // return response.data;
   }
@@ -49,6 +50,9 @@ class UserRepository {
       "email": email,
       "password": password,
     });
+    await storage.write(key: 'username', value: response.data["username"]);
+    await storage.write(key: 'email', value: response.data["email"]);
+    await storage.write(key: 'token', value: response.data["token"]);
     return response.data["token"];
     //return response.data;
   }
