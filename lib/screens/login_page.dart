@@ -140,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                     onTap: () {
+                                      
                                       authBloc.add(LoginButtonPressed(
                                           email: _userEmailController.text,
                                           password:
