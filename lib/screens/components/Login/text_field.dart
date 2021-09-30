@@ -17,34 +17,87 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      width: size.width * 0.85,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 0,
-            blurRadius: 7,
-            offset: Offset(1, 3), // changes position of shadow
-          ),
-        ],
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(40),
-      ),
+      margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.045, vertical: size.height * 0.001),
+      width: size.width * 0.9,
+      // decoration: BoxDecoration(
+      //   boxShadow: [
+      //     BoxShadow(
+      //       color: Colors.grey.withOpacity(0.3),
+      //       spreadRadius: 0,
+      //       blurRadius: 7,
+      //       offset: Offset(1, 3), // changes position of shadow
+      //     ),
+      //   ],
+      //   color: Colors.white,
+      //   borderRadius: BorderRadius.circular(40),
+      // ),
       child: widget.child,
     );
   }
 }
 
+class RoundedEmailInputField extends StatefulWidget {
+  final String hintText;
+  final IconData icon;
+  final ValueChanged<String> onChanged;
+  final TextEditingController userTextController;
+  final Key Formkey;
+
+  const RoundedEmailInputField({
+    Key? key,
+    required this.Formkey,
+    required this.userTextController,
+    required this.hintText,
+    this.icon = Icons.person,
+    required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  State<RoundedEmailInputField> createState() => _RoundedEmailInputFieldState();
+}
+
+class _RoundedEmailInputFieldState extends State<RoundedEmailInputField> {
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      child: TextFormField(
+        key: widget.Formkey,
+        controller: widget.userTextController,
+        onChanged: widget.onChanged,
+        cursorColor: kPrimaryColor,
+        decoration: InputDecoration(
+          icon: Icon(
+            widget.icon,
+            color: kPrimaryColor,
+          ),
+          hintText: widget.hintText,
+          border: InputBorder.none,
+        ),
+        validator: (value) {
+          if (value!.isNotEmpty || value.isValidEmail()) {
+            return null;
+          } else {
+            return "Enter correct Email";
+          }
+        },
+      ),
+    );
+  }
+}
+
+//username field
 class RoundedInputField extends StatefulWidget {
   final String hintText;
   final IconData icon;
   final ValueChanged<String> onChanged;
   final TextEditingController userTextController;
+  final Key Formkey;
 
   const RoundedInputField({
     Key? key,
+    required this.Formkey,
     required this.userTextController,
     required this.hintText,
     this.icon = Icons.person,
@@ -59,7 +112,8 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
+        key: widget.Formkey,
         controller: widget.userTextController,
         onChanged: widget.onChanged,
         cursorColor: kPrimaryColor,
@@ -71,6 +125,14 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
           hintText: widget.hintText,
           border: InputBorder.none,
         ),
+        validator: (value) {
+          print("Valye is : " + value.toString());
+          if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+            return "Enter correct name";
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
@@ -78,8 +140,10 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
 
 class RoundedPasswordField extends StatefulWidget {
   final ValueChanged<String> onChanged;
+  final Key Formkey;
   const RoundedPasswordField({
     Key? key,
+    required this.Formkey,
     required this.userPasswordController,
     required this.onChanged,
   }) : super(key: key);
@@ -100,7 +164,8 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
+        key: widget.Formkey,
         controller: widget.userPasswordController,
         obscureText: _passwordVisible,
         onChanged: widget.onChanged,
@@ -124,7 +189,23 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
               }),
           border: InputBorder.none,
         ),
+        validator: (value) {
+          print("Password Value is : " + value.toString());
+          if (value!.length < 6) {
+            return "Add a password of at least 6 characters";
+          } else {
+            return null;
+          }
+        },
       ),
     );
+  }
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
   }
 }

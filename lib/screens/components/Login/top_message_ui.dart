@@ -6,7 +6,7 @@ import 'package:travelv2/config/constants.dart';
 Widget signInMessage(BuildContext context) {
   Size size = MediaQuery.of(context).size;
   return Container(
-    height: size.height * 0.2,
+    height: size.height * 0.15,
     decoration: const BoxDecoration(color: Color(0xFFFFB900)),
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -19,8 +19,8 @@ Widget signInMessage(BuildContext context) {
                   fontFamily: "Inter",
                   fontSize: 30,
                   fontWeight: FontWeight.w900)),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: size.height * 0.01,
           ),
           const Text(
             "We can't wait to see you enjoying time \nwith Bloggy community",
@@ -36,7 +36,7 @@ Widget signInMessage(BuildContext context) {
 Widget signUpMessage(BuildContext context) {
   Size size = MediaQuery.of(context).size;
   return Container(
-    height: size.height * 0.2,
+    height: size.height * 0.15,
     decoration: BoxDecoration(color: Color(0xFFFFB900)),
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -50,7 +50,7 @@ Widget signUpMessage(BuildContext context) {
                   fontSize: 30,
                   fontWeight: FontWeight.w900)),
           SizedBox(
-            height: 10,
+            height: size.height * 0.01,
           ),
           Text(
             "We can't wait to see you enjoying time \nwith Bloggy community",

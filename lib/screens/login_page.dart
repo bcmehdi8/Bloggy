@@ -18,6 +18,12 @@ import 'components/Login/fb_google_icons.dart';
 import 'components/Login/top_message_ui.dart';
 import 'components/Login/forget_password.dart';
 
+class JosKeys {
+  static final josKeys1 = GlobalKey<FormState>();
+  static final josKeys2 = GlobalKey<FormState>();
+  static final josKeys3 = GlobalKey<FormState>();
+}
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -30,10 +36,12 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _userPasswordController = TextEditingController();
 
   late LoginBloc authBloc;
-
+  final _formKey = GlobalKey<FormState>();
+  late bool _passwordVisible;
   @override
   void initState() {
     authBloc = BlocProvider.of<LoginBloc>(context);
+    _passwordVisible = true;
     super.initState();
   }
 
@@ -94,34 +102,108 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               //     username  TextField
-                              Center(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: kDefaultPadding * 2),
-                                      child: RoundedInputField(
-                                        userTextController:
-                                            _userEmailController,
-                                        hintText: "Your Email",
-                                        onChanged: (value) {},
+                              Form(
+                                key: _formKey,
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: kDefaultPadding * 2),
+                                        child: TextFieldContainer(
+                                          child: TextFormField(
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            controller: _userEmailController,
+                                            cursorColor: kPrimaryColor,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              prefixIcon: Icon(
+                                                EvaIcons.person,
+                                                color: kPrimaryColor,
+                                              ),
+                                              hintText: "example@example.com",
+                                              labelText: "Email",
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty ||
+                                                  !value.isValidEmail()) {
+                                                return "Enter correct Email";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    RoundedPasswordField(
-                                      userPasswordController:
-                                          _userPasswordController,
-                                      onChanged: (value) {},
-                                    ),
-                                  ],
+                                      TextFieldContainer(
+                                        child: TextFormField(
+                                          textInputAction: TextInputAction.done,
+                                          controller: _userPasswordController,
+                                          obscureText: _passwordVisible,
+                                          cursorColor: kPrimaryColor,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            prefixIcon: Icon(
+                                              Icons.lock,
+                                              color: kPrimaryColor,
+                                            ),
+                                            hintText: "secure Key",
+                                            labelText: "Password",
+                                            suffixIcon: IconButton(
+                                                icon: Icon(
+                                                  _passwordVisible
+                                                      ? Icons.visibility
+                                                      : Icons.visibility_off,
+                                                  color: kPrimaryColor,
+                                                ),
+                                                onPressed: () {
+                                                  // Update the state i.e. toogle the state of passwordVisible variable
+                                                  setState(() {
+                                                    _passwordVisible =
+                                                        !_passwordVisible;
+                                                  });
+                                                }),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              borderSide: BorderSide(
+                                                width: 0,
+                                                style: BorderStyle.none,
+                                              ),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value!.length < 6) {
+                                              return "You need password of 6 characters";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
 
                               //Login Now Button
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 45, bottom: 10),
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.02,
+                                    bottom: size.height * 0.02),
                                 child: Center(
-                                  child: InkWell(
+                                  child: GestureDetector(
                                     child: Container(
                                       height: 59,
                                       width: size.width * 0.8,
@@ -140,11 +222,27 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                     onTap: () {
+                                      if (_formKey.currentState!.validate()) {
+                                    
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text('Processing Data')),
+                                        );
+                                      } else {
                                       
-                                      authBloc.add(LoginButtonPressed(
-                                          email: _userEmailController.text,
-                                          password:
-                                              _userPasswordController.text));
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text('FAILED')),
+                                        );
+                                      }
+                                      // authBloc.add(
+                                      //   LoginButtonPressed(
+                                      //       email: _userEmailController.text,
+                                      //       password:
+                                      //           _userPasswordController.text),
+                                      // );
                                     },
                                   ),
                                 ),
@@ -156,7 +254,7 @@ class _LoginPageState extends State<LoginPage> {
                               //         email: _userEmailController.text,
                               //         password: _userPasswordController.text))),
                               //forget password
-                              ForgetPassword(),
+                              ForgetPassword(context),
                               //         Fb and google icons
                               fbGoogleIcons(context),
                               //sign up Text

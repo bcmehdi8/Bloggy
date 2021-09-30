@@ -15,6 +15,7 @@ import 'package:travelv2/screens/components/Login/text_field.dart';
 import 'package:travelv2/screens/components/Login/top_message_ui.dart';
 
 import 'components/Login/bottom_question.dart';
+import 'components/Login/fb_google_icons.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -28,11 +29,15 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController _userEmailController = TextEditingController();
   TextEditingController _userPasswordController = TextEditingController();
 
+  late bool _passwordVisible;
+
+  final _formKey = GlobalKey<FormState>();
   late LoginBloc authBloc;
 
   @override
   void initState() {
     authBloc = BlocProvider.of<LoginBloc>(context);
+    _passwordVisible = true;
     super.initState();
   }
 
@@ -88,36 +93,139 @@ class _SignupPageState extends State<SignupPage> {
                           child: Column(
                             children: [
                               //     username  TextField
-                              Center(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: kDefaultPadding * 2),
-                                      child: RoundedInputField(
-                                        userTextController: _userNameController,
-                                        hintText: "Your Name",
-                                        onChanged: (value) {},
+                              Form(
+                                key: _formKey,
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: size.height * 0.02),
+                                        child: TextFieldContainer(
+                                          child: TextFormField(
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            textInputAction: TextInputAction.done,
+                                            controller: _userEmailController,
+                                            cursorColor: kPrimaryColor,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              prefixIcon: Icon(
+                                                EvaIcons.person,
+                                                color: kPrimaryColor,
+                                              ),
+                                              hintText: "Example",
+                                              labelText: "Name",
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                borderSide: BorderSide(
+                                                  width: 0,
+                                                  style: BorderStyle.none,
+                                                ),
+                                              ),
+                                            ),
+                                            validator: (value) {
+                                              if (value!.isEmpty ||
+                                                  value!.length < 2) {
+                                                return "Enter a valid Name";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    RoundedInputField(
-                                      userTextController: _userEmailController,
-                                      hintText: "Your Email",
-                                      onChanged: (value) {},
-                                    ),
-                                    RoundedPasswordField(
-                                      userPasswordController:
-                                          _userPasswordController,
-                                      onChanged: (value) {},
-                                    ),
-                                  ],
+                                      TextFieldContainer(
+                                        child: TextFormField(
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          textInputAction: TextInputAction.done,
+                                          controller: _userNameController,
+                                          cursorColor: kPrimaryColor,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            prefixIcon: Icon(
+                                              EvaIcons.email,
+                                              color: kPrimaryColor,
+                                            ),
+                                            hintText: "example@example.com",
+                                            labelText: "Email",
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              borderSide: BorderSide(
+                                                width: 0,
+                                                style: BorderStyle.none,
+                                              ),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value!.isEmpty ||
+                                                !value.isValidEmail()) {
+                                              return "Enter correct Email";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      TextFieldContainer(
+                                        child: TextFormField(
+                                          textInputAction: TextInputAction.done,
+                                          controller: _userPasswordController,
+                                          obscureText: _passwordVisible,
+                                          cursorColor: kPrimaryColor,
+                                          decoration: InputDecoration(
+                                            filled: true,
+                                            prefixIcon: Icon(
+                                              Icons.lock,
+                                              color: kPrimaryColor,
+                                            ),
+                                            labelText: "Password",
+                                            hintText: "secure Key",
+                                            suffixIcon: IconButton(
+                                                icon: Icon(
+                                                  _passwordVisible
+                                                      ? Icons.visibility
+                                                      : Icons.visibility_off,
+                                                  color: kPrimaryColor,
+                                                ),
+                                                onPressed: () {
+                                                  // Update the state i.e. toogle the state of passwordVisible variable
+                                                  setState(() {
+                                                    _passwordVisible =
+                                                        !_passwordVisible;
+                                                  });
+                                                }),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              borderSide: BorderSide(
+                                                width: 0,
+                                                style: BorderStyle.none,
+                                              ),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value!.length < 6) {
+                                              return "You need password of 6 characters";
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
 
                               //Login Now Button
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 45, bottom: 10),
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.02,
+                                    bottom: size.height * 0.02),
                                 child: Center(
                                   child: InkWell(
                                     child: Container(
@@ -138,47 +246,33 @@ class _SignupPageState extends State<SignupPage> {
                                       ),
                                     ),
                                     onTap: () {
-                                      authBloc.add(RegisterButtonPressed(
-                                          username: _userNameController.text,
-                                          email: _userEmailController.text,
-                                          password:
-                                              _userPasswordController.text));
+                                       if (_formKey.currentState!.validate()) {
+                                  
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text('Processing Data')),
+                                        );
+                                      } else {
+                                    
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text('FAILED')),
+                                        );
+                                      }
+                                      // authBloc.add(RegisterButtonPressed(
+                                      //     username: _userNameController.text,
+                                      //     email: _userEmailController.text,
+                                      //     password:
+                                      //         _userPasswordController.text));
                                     },
                                   ),
                                 ),
                               ),
 
                               //         Fb and google icons
-                              Padding(
-                                padding: EdgeInsets.only(top: 0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.google,
-                                          color: Colors.red,
-                                          size: 30,
-                                        )),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.facebook,
-                                          color: Colors.blue,
-                                          size: 30,
-                                        )),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.twitter,
-                                          color: Colors.blue,
-                                          size: 30,
-                                        )),
-                                  ],
-                                ),
-                              ),
+                              fbGoogleIcons(context),
                               //sign in Text
                               SigninQuestion(context),
                             ],
