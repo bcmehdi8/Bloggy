@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelv2/backend/writer_bloc/writer_repo.dart';
@@ -95,41 +96,71 @@ class _WriterCardState extends State<WriterCard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Row(children: [
-      ClipOval(
-        child: FadeInImage.assetNetwork(
-          placeholder: PlaceHolder,
-          image: widget.image.toString(),
-          height: size.height * 0.08,
-          width: size.width * 0.15,
-          fit: BoxFit.cover,
-        ),
-      ),
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-        child: Container(
-          height: size.height,
-          width: size.width * 0.004,
-          color: Colors.black,
-        ),
-      ),
-      Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Text(
-              widget.date,
-              style: TextStyle(
-                fontFamily: "SF",
-              ),
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start, //change here don't //worked
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipOval(
+            child: FadeInImage.assetNetwork(
+              placeholder: PlaceHolder,
+              image: widget.image.toString(),
+              height: size.height * 0.08,
+              width: size.width * 0.15,
+              fit: BoxFit.cover,
             ),
-            Text(widget.name,
-                style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontFamily: "SF",
-                    fontSize: 20))
-          ])
-    ]);
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.015),
+            child: Container(
+              height: size.height,
+              width: size.width * 0.004,
+              color: Colors.black,
+            ),
+          ),
+          Container(
+            width: size.width * 0.5,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  Text(
+                    widget.date,
+                    style: TextStyle(
+                      fontFamily: "SF",
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  Text(widget.name,
+                      softWrap: true,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          height: 1.1,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "SF",
+                          fontSize: 17))
+                ]),
+          ),
+          SizedBox(
+            width: size.width * 0.01,
+          ),
+          IconButton(
+              padding: EdgeInsets.zero,
+              iconSize: 26,
+              color: kPrimaryColor,
+              onPressed: () {},
+              icon: Icon(EvaIcons.paperPlane)),
+          SizedBox(
+            width: size.width * 0.001,
+          ),
+          IconButton(
+              padding: EdgeInsets.zero,
+              constraints: BoxConstraints(),
+              iconSize: 26,
+              color: kPrimaryColor,
+              onPressed: () {},
+              icon: Icon(EvaIcons.bookmarkOutline)),
+        ]);
   }
 }
