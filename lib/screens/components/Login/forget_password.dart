@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:travelv2/config/constants.dart';
 
 Widget ForgetPassword(BuildContext context) {
-   Size size = MediaQuery.of(context).size;
+  Size size = MediaQuery.of(context).size;
   return Padding(
-    padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+    padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
     child: Center(
         child: Text(
       "Forgot Password ?",

@@ -2,22 +2,22 @@ const user = require("../logic/user.model");
 
          //check user
         exports.checkUser = (req, res) => {
-             user.findUser(
-                             
+             user.findUser(                
                req.body.email,
                req.body.password,
-                                      (err, data) => {
-                                      if (err)
-                                        res.status(500).send({
-                                          message:
-                                            err.message || "Some error occurred while retrieving writer."
-                                        });   
-                                      else {
-                                        console.log('record inserted');
-                                       
-                                          res.send(data);}
-                                    });
+                (err, data) => {
+                    if (err)
+                    res.status(500).send({
+                      message: err.message || "Some error occurred while retrieving writer."
+                          });   
+                       else {
+                  
+                             res.send(data);}
+                               });
                                   };
+
+
+
 
                 //Create new user
                 exports.newUser = (req, res) => {
@@ -33,7 +33,7 @@ const user = require("../logic/user.model");
                           err.message || "Some error occurred while retrieving writer."
                       });   
                     else {
-                      console.log('record inserted');
+                 
                      
                         res.send(data);}
                   });

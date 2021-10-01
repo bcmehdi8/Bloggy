@@ -41,6 +41,15 @@ class _SignupPageState extends State<SignupPage> {
     super.initState();
   }
 
+  void _showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message,
+          textAlign: TextAlign.center, style: TextStyle(color: Colors.black)),
+      backgroundColor: kPrimaryColor,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   void _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
@@ -67,7 +76,10 @@ class _SignupPageState extends State<SignupPage> {
         body: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is RegisterSuccess) {
+              _showSnackBar(context, 'Welcome to Bloggy!');
               return _navigateAndDisplaySelection(context);
+            } else if (state is AlreadyUsedEmail) {
+              _showSnackBar(context, 'That email is already in use');
             }
           },
           child: SingleChildScrollView(
@@ -101,12 +113,10 @@ class _SignupPageState extends State<SignupPage> {
                                       Padding(
                                         padding: EdgeInsets.only(
                                             top: size.height * 0.02),
+                                        //Username Field
                                         child: TextFieldContainer(
                                           child: TextFormField(
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            textInputAction: TextInputAction.done,
-                                            controller: _userEmailController,
+                                            controller: _userNameController,
                                             cursorColor: kPrimaryColor,
                                             decoration: InputDecoration(
                                               filled: true,
@@ -127,7 +137,7 @@ class _SignupPageState extends State<SignupPage> {
                                             ),
                                             validator: (value) {
                                               if (value!.isEmpty ||
-                                                  value!.length < 2) {
+                                                  value.length < 2) {
                                                 return "Enter a valid Name";
                                               } else {
                                                 return null;
@@ -136,12 +146,13 @@ class _SignupPageState extends State<SignupPage> {
                                           ),
                                         ),
                                       ),
+                                      //Email Field
                                       TextFieldContainer(
                                         child: TextFormField(
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           textInputAction: TextInputAction.done,
-                                          controller: _userNameController,
+                                          controller: _userEmailController,
                                           cursorColor: kPrimaryColor,
                                           decoration: InputDecoration(
                                             filled: true,
@@ -170,6 +181,7 @@ class _SignupPageState extends State<SignupPage> {
                                           },
                                         ),
                                       ),
+                                      //Password Field
                                       TextFieldContainer(
                                         child: TextFormField(
                                           textInputAction: TextInputAction.done,
@@ -224,12 +236,13 @@ class _SignupPageState extends State<SignupPage> {
                               //Login Now Button
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: size.height * 0.02,
-                                    bottom: size.height * 0.02),
+                                    top: size.height * 0.009,
+                                    bottom: size.height * 0.009),
                                 child: Center(
                                   child: InkWell(
                                     child: Container(
-                                      height: 59,
+                                      height: size.height * 0.09,
+                                      // height: 59,
                                       width: size.width * 0.8,
                                       decoration: BoxDecoration(
                                         color: Colors.black,
@@ -246,26 +259,16 @@ class _SignupPageState extends State<SignupPage> {
                                       ),
                                     ),
                                     onTap: () {
-                                       if (_formKey.currentState!.validate()) {
-                                  
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                              content: Text('Processing Data')),
-                                        );
+                                      if (_formKey.currentState!.validate()) {
+                                        authBloc.add(RegisterButtonPressed(
+                                            username: _userNameController.text,
+                                            email: _userEmailController.text,
+                                            password:
+                                                _userPasswordController.text));
                                       } else {
-                                    
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                              content: Text('FAILED')),
-                                        );
+                                        _showSnackBar(
+                                            context, 'Failed To Register');
                                       }
-                                      // authBloc.add(RegisterButtonPressed(
-                                      //     username: _userNameController.text,
-                                      //     email: _userEmailController.text,
-                                      //     password:
-                                      //         _userPasswordController.text));
                                     },
                                   ),
                                 ),

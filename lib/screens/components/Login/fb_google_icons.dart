@@ -7,7 +7,7 @@ import 'package:travelv2/config/constants.dart';
 Widget fbGoogleIcons(BuildContext context) {
   Size size = MediaQuery.of(context).size;
   return Padding(
-    padding: EdgeInsets.only(top: size.height * 0.01),
+    padding: EdgeInsets.only(top: size.height * 0.0085),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,

@@ -32,28 +32,39 @@ class UserRepository {
     print("Token Deleted");
   }
 
-  Future<String> login(String email, String password) async {
+  Future login(String email, String password) async {
     Response response = await _dio.post(loginUrl, data: {
       "email": email,
       "password": password,
     });
-    await storage.write(key: 'token', value: response.data["token"]);
-    await storage.write(key: 'username', value: response.data["username"]);
-    await storage.write(key: 'email', value: response.data["email"]);
-    return response.data["token"];
+    if (response.data["message"] == "DONE") {
+      await storage.write(key: 'username', value: response.data["username"]);
+      await storage.write(key: 'email', value: response.data["email"]);
+      await storage.write(key: 'token', value: response.data["token"]);
+      return response.data;
+    } else {
+      return response.data;
+    }
+
     // return response.data;
   }
 
-  Future<String> Singup(String username, String email, String password) async {
+  Future Singup(String username, String email, String password) async {
     Response response = await _dio.post(signupUrl, data: {
       "username": username,
       "email": email,
       "password": password,
     });
-    await storage.write(key: 'username', value: response.data["username"]);
-    await storage.write(key: 'email', value: response.data["email"]);
-    await storage.write(key: 'token', value: response.data["token"]);
-    return response.data["token"];
+    print("the Response data is : " + response.statusCode.toString());
+    // return response.data;
+    if (response.data["message"] == "NEW") {
+      await storage.write(key: 'username', value: response.data["username"]);
+      await storage.write(key: 'email', value: response.data["email"]);
+      await storage.write(key: 'token', value: response.data["token"]);
+      return response.data;
+    } else {
+      return response.data;
+    }
     //return response.data;
   }
 }

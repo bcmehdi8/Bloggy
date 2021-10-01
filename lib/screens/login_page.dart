@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:travelv2/backend/auth_bloc/auth_bloc.dart';
 import 'package:travelv2/backend/login_bloc/login_bloc.dart';
 import 'package:travelv2/backend/login_bloc/login_state.dart';
 import 'package:travelv2/backend/login_bloc/login_event.dart';
@@ -46,7 +47,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(content: Text(message));
+    final snackBar = SnackBar(
+      content: Text(message,
+          textAlign: TextAlign.center, style: TextStyle(color: Colors.black)),
+      backgroundColor: kPrimaryColor,
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -76,7 +81,13 @@ class _LoginPageState extends State<LoginPage> {
         body: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
+              _showSnackBar(context, 'Welcome to Bloggy!');
               return _navigateAndDisplaySelection(context);
+            } else if (state is LoginUnknownEmail) {
+              return _showSnackBar(context,
+                  "Sorry, we couldn't find an account with that email");
+            } else if (state is LoginWrongPassword) {
+              return _showSnackBar(context, "Sorry, that password isn't right");
             }
           },
           child: SingleChildScrollView(
@@ -200,12 +211,12 @@ class _LoginPageState extends State<LoginPage> {
                               //Login Now Button
                               Padding(
                                 padding: EdgeInsets.only(
-                                    top: size.height * 0.02,
-                                    bottom: size.height * 0.02),
+                                    top: size.height * 0.015,
+                                    bottom: size.height * 0.015),
                                 child: Center(
                                   child: GestureDetector(
                                     child: Container(
-                                      height: 59,
+                                      height: size.height * 0.085,
                                       width: size.width * 0.8,
                                       decoration: BoxDecoration(
                                         color: Colors.black,
@@ -223,39 +234,23 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     onTap: () {
                                       if (_formKey.currentState!.validate()) {
-                                    
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                              content: Text('Processing Data')),
+                                        authBloc.add(
+                                          LoginButtonPressed(
+                                              email: _userEmailController.text,
+                                              password:
+                                                  _userPasswordController.text),
                                         );
                                       } else {
-                                      
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                              content: Text('FAILED')),
-                                        );
+                                        _showSnackBar(
+                                            context, 'Failed To Login');
                                       }
-                                      // authBloc.add(
-                                      //   LoginButtonPressed(
-                                      //       email: _userEmailController.text,
-                                      //       password:
-                                      //           _userPasswordController.text),
-                                      // );
                                     },
                                   ),
                                 ),
                               ),
-                              // submitButton(
-                              //     context,
-                              //     "Login Now",
-                              //     authBloc.add(LoginButtonPressed(
-                              //         email: _userEmailController.text,
-                              //         password: _userPasswordController.text))),
-                              //forget password
+
                               ForgetPassword(context),
-                              //         Fb and google icons
+                              // Fb and google icons
                               fbGoogleIcons(context),
                               //sign up Text
                               RegisterQuestion(context),
