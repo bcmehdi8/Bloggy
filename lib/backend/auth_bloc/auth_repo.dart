@@ -64,7 +64,6 @@ class UserRepository {
       "email": email,
       "password": password,
     });
-    print("the Response data is : " + response.statusCode.toString());
     // return response.data;
     if (response.data["message"] == "NEW") {
       await storage.write(key: 'username', value: response.data["username"]);
