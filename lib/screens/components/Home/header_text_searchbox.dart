@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travelv2/backend/auth_bloc/auth_repo.dart';
 import 'package:travelv2/config/constants.dart';
 
@@ -13,11 +14,22 @@ class HeaderTextSearchBox extends StatefulWidget {
 }
 
 class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
+  final storage = new FlutterSecureStorage();
   UserRepository userRepository = new UserRepository();
+  var username = "TEST";
 
   @override
   void initState() {
+    init();
     super.initState();
+  }
+
+  Future init() async {
+    final value = await UserRepository.getUserame();
+    print(UserRepository.getUserame());
+    setState(() {
+      username = value.toString();
+    });
   }
 
   @override
@@ -41,7 +53,7 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hey, Mehdi!",
+                        "Hey, ${username}!",
                         style: TextStyle(
                             color: Colors.black54,
                             fontSize: 17,

@@ -7,7 +7,7 @@ class UserRepository {
   var loginUrl = '$PROTOCOL://$DOMAIN/auth/login';
   var signupUrl = '$PROTOCOL://$DOMAIN/auth/createUser';
 
-  final storage = new FlutterSecureStorage();
+  static final storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
 
   Future<bool> hasToken() async {
@@ -19,6 +19,12 @@ class UserRepository {
       print("hasToken() Function is FALSE");
       return false;
     }
+  }
+
+  static Future<String?> getUserame() async {
+    var value = await storage.read(key: 'username') ?? 'Dear';
+    print(storage.readAll());
+    return value;
   }
 
   Future<void> persistToken(String token) async {
@@ -37,12 +43,15 @@ class UserRepository {
       "email": email,
       "password": password,
     });
+     print("USERNAME : " + response.data["username"]);
     if (response.data["message"] == "DONE") {
       await storage.write(key: 'username', value: response.data["username"]);
-      await storage.write(key: 'email', value: response.data["email"]);
+      await storage.write(key: 'email', value: email);
       await storage.write(key: 'token', value: response.data["token"]);
+    
       return response.data;
     } else {
+      await storage.write(key: 'username', value: "Dear");
       return response.data;
     }
 

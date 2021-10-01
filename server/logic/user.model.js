@@ -41,7 +41,7 @@ User.findUser = (email,password,res,result) => {
                   var token = jwt.sign(payload, KEY, {algorithm: 'HS256', expiresIn: "15d"});
                   console.log("Token Success");
                   console.log("username : "+username+", email : "+email+" LoggedIn With following Token : "+token);
-                  res(null, {email,token, message:'DONE'});
+                  res(null, {username,email,token, message:'DONE'});
      // res.send(token);
           }
           else if (err) {

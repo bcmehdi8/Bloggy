@@ -89,7 +89,7 @@ class _articlePageState extends State<articlePage> {
               padding: EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
                 color: Colors.black12,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(24),
               ),
               child: LikeButton(
                 size: 45,
