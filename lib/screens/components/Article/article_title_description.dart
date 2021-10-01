@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/backend/model/article_model.dart';
+import 'package:travelv2/screens/components/Article/date_writer_card.dart';
 
 import '../../article_page.dart';
 
@@ -21,30 +22,30 @@ class _ArticleTitleDescriptionState extends State<ArticleTitleDescription> {
     Size size = MediaQuery.of(context).size;
     return IntrinsicHeight(
       child: Column(children: [
+        // Padding only
         Padding(
             padding: EdgeInsets.only(
-          top: kDefaultPadding / 3,
+          top: size.height * 0.007,
         )),
+        //Padding with Title
         Padding(
           padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
           child: Text(
             widget.data['title'],
             style: TextStyle(
-              fontSize: 32,
-              fontFamily: "Open sans",
+              fontSize: 30,
+              fontFamily: "SF",
               fontWeight: FontWeight.w800,
             ),
           ),
         ),
-        Padding(
-            padding: EdgeInsets.only(
-          top: kDefaultPadding * 1.2,
-        )),
+        date_writer(data: widget.data),
+        //Padding with Image
         Container(
-          // padding: EdgeInsets.symmetric(
-          //   horizontal: kDefaultPadding,
-          // ),
-          height: 250,
+          padding: EdgeInsets.only(
+            top: 10,
+          ),
+          height: size.height * 0.35,
           width: size.width,
           child: FadeInImage.assetNetwork(
             placeholder: PlaceHolder,
@@ -52,17 +53,23 @@ class _ArticleTitleDescriptionState extends State<ArticleTitleDescription> {
             fit: BoxFit.cover,
           ),
         ),
+        // Padding only
         Padding(
             padding: EdgeInsets.only(
-          top: kDefaultPadding * 1.2,
+          top: size.height * 0.02,
         )),
+        //Description
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
             child: Text(
               widget.data['Description'],
               textAlign: TextAlign.left,
-              style: TextStyle(fontSize: 19, fontFamily: "Lato"),
+              style: TextStyle(
+                  fontSize: 19,
+                  fontFamily: "SF",
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal),
             ),
           ),
         ),

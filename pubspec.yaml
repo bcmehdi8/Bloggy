@@ -137,7 +137,20 @@ flutter:
         - asset: assets/fonts/Inter/Inter-Bold.otf
           weight: 700     
         - asset: assets/fonts/Inter/Inter-Black.otf
-          weight: 900  
+          weight: 900 
+    - family: SF
+      fonts:
+        - asset: assets/fonts/SanFrancisco/SFUIText-Light.otf
+          weight: 300
+        - asset: assets/fonts/SanFrancisco/SFUIText-RegularG2.otf
+          weight: 400
+          style: normal
+        - asset: assets/fonts/SanFrancisco/SFUIText-Medium.otf
+          weight: 500   
+        - asset: assets/fonts/SanFrancisco/SFUIText-SemiBold.otf
+          weight: 600            
+        - asset: assets/fonts/SanFrancisco/SFUIText-Bold.otf
+          weight: 700           
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

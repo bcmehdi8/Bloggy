@@ -13,7 +13,7 @@ class HeaderTextSearchBox extends StatefulWidget {
 }
 
 class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
-   UserRepository userRepository = new UserRepository();
+  UserRepository userRepository = new UserRepository();
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
           child: Stack(
             children: [
               Container(
-                height: size.height * 0.2 - 10,
+                height: size.height * 0.2,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -70,15 +70,15 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
                       margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                       padding:
                           EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                      height: 46,
+                      height: size.height * 0.075,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(2),
                           boxShadow: [
                             BoxShadow(
-                                offset: Offset(0, 3),
+                                offset: Offset(1, 5),
                                 blurRadius: 3,
-                                color: kPrimaryColor.withOpacity(0.1))
+                                color: kPrimaryColor.withOpacity(0.2))
                           ]),
                       child: Row(
                         children: [
@@ -99,7 +99,7 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
                               Icons.search,
                               color: kPrimaryColor,
                             ),
-                            padding: EdgeInsets.only(left: 20),
+                            padding: EdgeInsets.only(left: size.width * 0.1),
                             iconSize: 28.0,
                           )
                         ],

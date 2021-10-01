@@ -13,6 +13,7 @@ import 'package:travelv2/config/constants.dart';
 import 'package:travelv2/screens/comments_page.dart';
 import 'components/Article/article_title_description.dart';
 import 'components/Article/date_writer_card.dart';
+
 class articlePage extends StatefulWidget {
   final Map datax;
 
@@ -60,9 +61,7 @@ class _articlePageState extends State<articlePage> {
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               onPressed: () {},
-              icon: Icon(
-                EvaIcons.menu2,
-              ),
+              icon: Icon(Icons.more_horiz_outlined),
               padding: EdgeInsets.only(right: 1),
               //iconSize: 28.0,
 
@@ -74,7 +73,7 @@ class _articlePageState extends State<articlePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            date_writer(data: widget.datax),
+          //  date_writer(data: widget.datax),
             ArticleTitleDescription(data: widget.datax),
           ],
         ),

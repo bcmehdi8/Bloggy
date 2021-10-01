@@ -25,59 +25,64 @@ class _recentNewsState extends State<recentNews> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return IntrinsicHeight(
-      child: Container(
-        height: 1000,
-        child: BlocBuilder<ArticleBloc, ArticleState>(
-            // stream: newsBloc.articleStream,
-            builder: (context, state) {
-          if (state is ArticleLoadingState) {
-            // ignore: curly_braces_in_flow_control_structures
-            return Center(
-              child: Text("Error"),
-            );
-          } else if (state is FetchSuccessList) {
-            return ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemCount: state.article.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var article = state.article[index];
-                  return Align(
-                    heightFactor: 1.2,
-                    child: InkWell(
-                      child: recentNewsCard(
-                          image: article.image,
-                          title: article.title,
-                          date: article.date,
-                          readTime: article.readTime,
-                          press: () {}),
-                      onTap: () => {
-                        Navigator.of(context)
-                            .pushNamed('/article_page', arguments: {
-                          'articleID': article.articleID,
-                          'image': article.image,
-                          'title': article.title,
-                          'Description': article.Description,
-                          'readTime': article.readTime,
-                          'date': article.date,
-                          'writerID': article.writerID,
-                        })
-                      },
-                    ),
-                  );
-                });
-          } else if (state is ErrorState) {
-            return Center(
-              child: Text("RROR"),
-            );
-          }
-          return const Center(
-              child: Text(
-            "No data",
-            style: TextStyle(fontSize: 30),
-          ));
-        }),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            child: BlocBuilder<ArticleBloc, ArticleState>(
+                // stream: newsBloc.articleStream,
+                builder: (context, state) {
+              if (state is ArticleLoadingState) {
+                // ignore: curly_braces_in_flow_control_structures
+                return Center(
+                  child: Text("Error"),
+                );
+              } else if (state is FetchSuccessList) {
+                return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: state.article.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var article = state.article[index];
+                      return Align(
+                        heightFactor: 1.2,
+                        child: InkWell(
+                          child: recentNewsCard(
+                              image: article.image,
+                              title: article.title,
+                              date: article.date,
+                              readTime: article.readTime,
+                              press: () {}),
+                          onTap: () => {
+                            Navigator.of(context)
+                                .pushNamed('/article_page', arguments: {
+                              'articleID': article.articleID,
+                              'image': article.image,
+                              'title': article.title,
+                              'Description': article.Description,
+                              'readTime': article.readTime,
+                              'date': article.date,
+                              'writerID': article.writerID,
+                            })
+                          },
+                        ),
+                      );
+                    });
+              } else if (state is ErrorState) {
+                return Center(
+                  child: Text("RROR"),
+                );
+              }
+              return const Center(
+                  child: Text(
+                "No data",
+                style: TextStyle(fontSize: 30),
+              ));
+            }),
+          ),
+        ],
       ),
     );
   }
@@ -106,7 +111,7 @@ class _recentNewsCardState extends State<recentNewsCard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.115,
+      height: size.height * 0.117,
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Row(
         children: [
@@ -132,9 +137,9 @@ class _recentNewsCardState extends State<recentNewsCard> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      fontSize: 21,
+                      fontSize: 20,
                       fontFamily: 'Nunito Sans',
-                      height: 1.3,
+                      height: size.height * 0.0018,
                     ),
                   ),
                 ),

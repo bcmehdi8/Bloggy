@@ -54,7 +54,7 @@ class _SignupPageState extends State<SignupPage> {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result =
-        await Navigator.of(context).pushNamed('/home', arguments: {});
+        await Navigator.of(context).pushReplacementNamed('/home', arguments: {});
   }
 
   @override

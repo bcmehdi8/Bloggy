@@ -26,9 +26,10 @@ class _date_writerState extends State<date_writer> {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       child: Container(
+        color: Colors.grey.shade100,
         padding: EdgeInsets.symmetric(
-            horizontal: kDefaultPadding, vertical: kDefaultPadding / 1.1),
-        height: size.height * 0.12,
+            horizontal: kDefaultPadding, vertical: size.height * 0.01),
+        height: size.height * 0.10,
         width: size.width,
         child: Row(
           children: [
@@ -99,16 +100,16 @@ class _WriterCardState extends State<WriterCard> {
         child: FadeInImage.assetNetwork(
           placeholder: PlaceHolder,
           image: widget.image.toString(),
-          height: 50,
-          width: 50,
+          height: size.height * 0.08,
+          width: size.width * 0.15,
           fit: BoxFit.cover,
         ),
       ),
       Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
         child: Container(
           height: size.height,
-          width: 3,
+          width: size.width * 0.004,
           color: Colors.black,
         ),
       ),
@@ -120,13 +121,13 @@ class _WriterCardState extends State<WriterCard> {
             Text(
               widget.date,
               style: TextStyle(
-                fontFamily: "Lato",
+                fontFamily: "SF",
               ),
             ),
             Text(widget.name,
                 style: TextStyle(
                     fontWeight: FontWeight.w800,
-                    fontFamily: "Lato",
+                    fontFamily: "SF",
                     fontSize: 20))
           ])
     ]);
