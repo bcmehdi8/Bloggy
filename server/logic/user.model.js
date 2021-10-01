@@ -34,15 +34,16 @@ User.findUser = (email,password,res,result) => {
            return  res(null, {message:'PWD_ISSUE'});
           }
           else if(rezz.length > 0) {
+            username = rezz[0]['userName'];
             var payload = {
-              userName: username,
+             // userName: username,
               userEmail: email,
             };
                   var token = jwt.sign(payload, KEY, {algorithm: 'HS256', expiresIn: "15d"});
                   console.log("Token Success");
                   console.log("username : "+username+", email : "+email+" LoggedIn With following Token : "+token);
                   res(null, {username,email,token, message:'DONE'});
-     // res.send(token);
+                 // res.send(token);
           }
           else if (err) {
             console.log("error: ", err);
