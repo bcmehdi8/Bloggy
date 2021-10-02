@@ -1,5 +1,5 @@
 # Bloggy (Alpha)
-
+Bloggy is an IT Blog where you can find the latest technology updates
 ## Download 🔜 (Available on 15th Oct)
 
 <a href="https://play.google.com/store/apps/" target="_blank">
