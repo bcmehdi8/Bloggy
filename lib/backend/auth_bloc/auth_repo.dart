@@ -54,8 +54,6 @@ class UserRepository {
       await storage.write(key: 'username', value: "Dear");
       return response.data;
     }
-
-    // return response.data;
   }
 
   Future Singup(String username, String email, String password) async {
