@@ -80,59 +80,31 @@ class _articlePageState extends State<articlePage> {
         ),
       ),
 
-      floatingActionButton: Stack(
-        children: [
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: LikeButton(
-                size: 45,
-                circleColor: CircleColor(
-                    start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                bubblesColor: BubblesColor(
-                  dotPrimaryColor: Color(0xff33b5e5),
-                  dotSecondaryColor: Color(0xff0099cc),
-                ),
-                likeBuilder: (bool isLiked) {
-                  return Icon(
-                    Icons.favorite,
-                    color: isLiked ? Colors.redAccent : Colors.grey,
-                    size: 45,
-                  );
-                },
-                likeCount: 120,
-              ),
+      floatingActionButton: FloatingActionButton.extended(
+          label: Text(
+            "17",
+            style: TextStyle(
+              fontFamily: "SF",
+              fontWeight: FontWeight.w800,
             ),
           ),
-        ],
-      ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //     label: Text("2.1K"),
-      //     // hoverColor: Colors.redAccent,
-      //     // focusColor: Colors.redAccent,
-      //     // foregroundColor: Colors.redAccent,
-      //     backgroundColor: kPrimaryColor,
-      //     icon: Icon(
-      //       LineIcons.lizardHand,
-      //       color: Colors.white,
-      //     ),
-      //     onPressed: () {
-      //       Navigator.of(context).pushNamed('/comments', arguments: {
-      //         'articleID': widget.datax['articleID'],
-      //         'image': widget.datax['image'],
-      //         'title': widget.datax['title'],
-      //         'Description': widget.datax['Description'],
-      //         'readTime': widget.datax['readTime'],
-      //         'date': widget.datax['date'],
-      //         'writerID': widget.datax['writerID'],
-      //       });
-      //     }),
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.black,
+          icon: Icon(
+            LineIcons.commentDots,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed('/comments', arguments: {
+              'articleID': widget.datax['articleID'],
+              'image': widget.datax['image'],
+              'title': widget.datax['title'],
+              'Description': widget.datax['Description'],
+              'readTime': widget.datax['readTime'],
+              'date': widget.datax['date'],
+              'writerID': widget.datax['writerID'],
+            });
+          }),
       //  floatingActionButton: CustomFABWidget(data: widget.datax,),
       // floatingActionButton: OpenContainer(
       //   openBuilder: (context, _) => commentsPage(),

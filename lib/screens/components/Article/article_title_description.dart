@@ -76,12 +76,8 @@ class _ArticleTitleDescriptionState extends State<ArticleTitleDescription> {
                 ),
               ),
             ),
+            Container(height: 65, color: Colors.grey.shade50)
           ]),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(height: 20, color: Colors.redAccent))
         ],
       ),
     );
