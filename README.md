@@ -1,6 +1,6 @@
 # Bloggy (Alpha)
 Bloggy is an IT Blog where you can find the latest technology updates
-## Download 🔜 (Available on 15th Oct)
+## Download 🔜 (Available on 17th Oct)
 
 <a href="https://play.google.com/store/apps/" target="_blank">
 <img src="https://play.google.com/intl/en_gb/badges/static/images/badges/en_badge_web_generic.png" width=240 />
