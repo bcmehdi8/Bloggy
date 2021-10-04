@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:travelv2/backend/auth_bloc/auth_repo.dart';
+import 'package:travelv2/backend/model/user_model.dart';
 import 'package:travelv2/config/constants.dart';
+import 'package:travelv2/config/local_storage.dart';
 
 class HeaderTextSearchBox extends StatefulWidget {
   const HeaderTextSearchBox({Key? key, required this.size}) : super(key: key);
@@ -15,8 +17,9 @@ class HeaderTextSearchBox extends StatefulWidget {
 
 class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
   final storage = new FlutterSecureStorage();
-  UserRepository userRepository = new UserRepository();
+  AuthRepository _authRepository = new AuthRepository();
   var username = "TEST";
+  late UserModel _userModel;
 
   @override
   void initState() {
@@ -25,10 +28,9 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
   }
 
   Future init() async {
-    final value = await UserRepository.getUserame();
-    print(UserRepository.getUserame());
+    //  final value = await LocalStorage();
     setState(() {
-      username = value.toString();
+      //  username = value.toString();
     });
   }
 
@@ -53,7 +55,7 @@ class _HeaderTextSearchBoxState extends State<HeaderTextSearchBox> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hey, ${username}!",
+                        "Hey, ${_userModel.username}!",
                         style: TextStyle(
                             color: Colors.black54,
                             fontSize: 17,

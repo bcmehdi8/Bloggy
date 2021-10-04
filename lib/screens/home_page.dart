@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
 }
 
 AppBar appBarHolder(BuildContext context) {
-  final UserRepository userRepository = new UserRepository();
+  final AuthRepository userRepository = new AuthRepository();
   return AppBar(
     backgroundColor: Colors.transparent,
     title: Text(

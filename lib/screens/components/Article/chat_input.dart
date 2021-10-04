@@ -134,9 +134,6 @@ class _ChatInputFieldState extends State<ChatInputField> {
         );
       });
     });
-
     commentController.text = "";
-
-    //  commentsBloc.add(FetchCommentsList());
   }
 }

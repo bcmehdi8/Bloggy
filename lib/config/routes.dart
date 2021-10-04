@@ -37,21 +37,21 @@ class RouteGenerator {
         return MaterialPageRoute(
             // ignore: prefer_const_constructors
             builder: (_) => BlocProvider<AuthenticationBloc>(
-                  create: (_) => AuthenticationBloc(AuthenticationUninitialized(), UserRepository()),
+                  create: (_) => AuthenticationBloc(AuthenticationUninitialized(), AuthRepository()),
                   child: splashScreen(),
                 ));
       case '/login_page':
         return MaterialPageRoute(
             // ignore: prefer_const_constructors
             builder: (_) => BlocProvider<LoginBloc>(
-                  create: (_) => LoginBloc(LoginInitial(), UserRepository()),
+                  create: (_) => LoginBloc(LoginInitial(), AuthRepository()),
                   child: LoginPage(),
                 ));
       case '/signup_page':
         return MaterialPageRoute(
             // ignore: prefer_const_constructors
             builder: (_) => BlocProvider<LoginBloc>(
-                  create: (_) => LoginBloc(LoginInitial(), UserRepository()),
+                  create: (_) => LoginBloc(LoginInitial(), AuthRepository()),
                   child: SignupPage(),
                 ));
 

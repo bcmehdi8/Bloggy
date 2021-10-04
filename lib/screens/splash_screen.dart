@@ -21,7 +21,7 @@ class splashScreen extends StatefulWidget {
 class _splashScreenState extends State<splashScreen> {
   late LoginBloc loginBloc;
   late AuthenticationBloc authenticationBloc;
-  UserRepository userRepository = UserRepository();
+  AuthRepository userRepository = AuthRepository();
 
   @override
   void initState() {

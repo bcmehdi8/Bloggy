@@ -16,7 +16,6 @@ const User = function(user) {
 //Login Proccess
 User.findUser = (email,password,res,result) => {
     console.log(email+ " attempted login");
-    var username;
     var passwordCrypted = crypto.createHash('sha256').update(password).digest('hex');
 
 
@@ -34,15 +33,20 @@ User.findUser = (email,password,res,result) => {
            return  res(null, {message:'PWD_ISSUE'});
           }
           else if(rezz.length > 0) {
-            username = rezz[0]['userName'];
+            var userid = rezz[0]['userID'];
+            var userimg = rezz[0]['userImage'];
+            var username = rezz[0]['userName'];
+
             var payload = {
-             // userName: username,
+              userID : userid,
+              userImage: userimg,
+              userName: username,
               userEmail: email,
             };
                   var token = jwt.sign(payload, KEY, {algorithm: 'HS256', expiresIn: "15d"});
                   console.log("Token Success");
                   console.log("username : "+username+", email : "+email+" LoggedIn With following Token : "+token);
-                  res(null, {username,email,token, message:'DONE'});
+                  res(null, {userid,username,email,token, message:'DONE'});
                  // res.send(token);
           }
           else if (err) {
@@ -68,6 +72,9 @@ User.findUser = (email,password,res,result) => {
     var ImageURL = "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
     var passwordCrypted = crypto.createHash('sha256').update(password).digest('hex');
 
+    var userid;
+    var userimg;
+
     sql.query("SELECT * FROM users WHERE userEmail='"+email+"'", (err, res) => {
       if(err) {
         console.log(err);
@@ -79,6 +86,8 @@ User.findUser = (email,password,res,result) => {
     sql.query("INSERT INTO users (userName,userImage,userEmail,userPassword) VALUES ('"+username+"','"+ImageURL+"','"+email+"','"+passwordCrypted+"')", (err, row) => {
         if(row != undefined ) {
             var payload = {
+              userImage : userimg,
+              userID: userid,
               userName: username,
             };
 
@@ -94,7 +103,7 @@ User.findUser = (email,password,res,result) => {
         res.send("There's no user matching that");
         return;
       }
-      result(null, {username,email,token,message:'NEW'});
+      result(null, {userid,username,userimg,email,token,message:'NEW'});
    });
 
   }}

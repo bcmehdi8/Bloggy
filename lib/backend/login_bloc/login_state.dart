@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 abstract class LoginState extends Equatable {
@@ -14,7 +12,9 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {}
+
 class LoginUnknownEmail extends LoginState {}
+
 class LoginWrongPassword extends LoginState {}
 
 class LoginFailure extends LoginState {
@@ -31,4 +31,5 @@ class LoginFailure extends LoginState {
 //Sign up
 
 class RegisterSuccess extends LoginState {}
+
 class AlreadyUsedEmail extends LoginState {}

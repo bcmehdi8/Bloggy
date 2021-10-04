@@ -51,6 +51,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   flutter_secure_storage: ^4.2.1
   like_button: ^2.0.3
+  jwt_decode: ^0.3.1
 
 dev_dependencies:
   flutter_test:

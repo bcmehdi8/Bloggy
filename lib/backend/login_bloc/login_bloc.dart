@@ -8,10 +8,10 @@ import 'package:travelv2/backend/login_bloc/login_state.dart';
 import 'package:travelv2/backend/login_bloc/login_event.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final UserRepository userRepository;
+  final AuthRepository authRepository;
   late AuthenticationBloc authenticationBloc;
 
-  LoginBloc(LoginState loginInitial, this.userRepository) : super(loginInitial);
+  LoginBloc(LoginState loginInitial, this.authRepository) : super(loginInitial);
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -20,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
       print("Login event is started");
       try {
-        final token = await userRepository.login(
+        final token = await authRepository.login(
           event.email,
           event.password,
         );
@@ -46,7 +46,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print("Register event is started");
 
       try {
-        final token = await userRepository.Singup(
+        final token = await authRepository.Singup(
           event.username,
           event.email,
           event.password,

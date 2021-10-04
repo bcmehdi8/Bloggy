@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 //HTTP Server Values
 const PROTOCOL = "http";
 const DOMAIN = "10.0.2.2:3000";
+const String CACHED_USER_DATA = "CACHED_USER_DATA";
 
 //Placeholder
 const String PlaceHolder = "assets/images/infinity-placeholder.gif";
