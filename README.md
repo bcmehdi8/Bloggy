@@ -16,7 +16,7 @@ Bloggy is an IT Blog where you can find the latest technology updates
 ## Changelog
 All notable changes to this project will be documented in this file.
 
-### ⭐️ v0.2.5 | 02-10-2021
+### ⭐️ v0.2.1 | 02-10-2021
 #### Added (Major Update)
 ##### - Share button added to article page, Feel free to share!
 ##### - Added Authentication System With Token
